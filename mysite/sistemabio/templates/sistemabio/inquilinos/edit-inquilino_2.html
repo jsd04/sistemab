@@ -1,0 +1,160 @@
+{% extends "sistemabio/base.html" %}
+{% load static %}
+{% block content %}
+<header class="row" style="position: relative; height: 50vh; width: 100%;" >
+        <div
+          class="col s12 m11 l9 xl8 "
+          style="position: absolute; top: 0px; height: 110%; left: 0px;"
+        >
+          <img
+            alt="imagen1"
+            src="{% static 'sistemabio/img/ba11.png' %}"
+            class="responsive-image" 
+            style="height: 120%; width: 80%; left: 0px; top: 0px; position: absolute; object-fit: cover;"
+          />
+        </div>
+        <div class="col s12 m9 l9 xl8 white-text" 
+             style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;"
+        >
+            <h1 class="titulo">
+              EDICION DE <b>INQUILINOS</b>
+            </h1>
+            <br>
+            <blockquote>
+              <h3 class="subtitulo black-text">
+                <b>
+                  Aquí puedes editar  la <br /> información de los <br />  inquilinos
+                </b>
+              </h3>
+            </blockquote>
+        </div>
+        
+        <div class="col m6 l6 xl5 hide-on-small-only" style="height: 100%; position: absolute; top: 0%; right: 0%;">
+          <img alt="" src="{% static 'sistemabio/img/parteba8_2.png' %}" 
+          class="responsive-img" style="position: absolute; right: 10px; top: 0px; height: 100%; width: 50%;">
+        </div>
+        
+      </header>
+      <br />
+      <br />
+      <br />
+      <div class="row justify-content-end">
+        <div class="col-3 align-self-end">
+          <a class="waves-effect waves-light text-white btn p-2 text-center  " style="background: rgb(29, 240, 134);border-radius: 20px;"
+                    href="javascript:window.history.back(); " style=""
+                > 
+            <i class="material-icons  text-white large rounded-circle btn p-2 text-center">arrow_back
+            </i>       Regresar              
+          </a>
+        </div>
+      </div>
+    <br />
+
+{{#each errors}}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{text}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{{/each}}
+
+<div class="col-md-4 mx-auto">
+  <div class="card">
+    <div class="card-header bg-danger text-center" style="--bs-bg-opacity: .7;">
+      <h3>Editar Inquilino</h3>
+    </div>
+    <div class="card-body bg-danger p-2" style="--bs-bg-opacity: .3;">
+      <form action="/inquilinos/edit-inquilino/{{inquilino._id}}?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT" />
+        <div class="mb-3">
+          <label for="title">Nombre:</label>
+          <input
+            type="text"
+            name="nombre"
+            class="form-control"
+            value="{{inquilino.nombre}}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="title">Curp:</label>
+          <input
+            type="text"
+            name="curp"
+            class="form-control"
+            value="{{inquilino.curp}}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="title">No.Piso:</label>
+          <input
+            type="text"
+            name="piso"
+            class="form-control"
+            value="{{inquilino.piso}}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description">No.Departamento:</label>
+          <textarea
+            name="departamento"
+            class="form-control"
+          >{{inquilino.departamento}}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="description">No. Teléfono:</label>
+          <textarea
+            name="telefono"
+            class="form-control"
+          >{{inquilino.telefono}}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="description">Correo:</label>
+          <textarea
+            name="correo"
+            class="form-control"
+          >{{inquilino.correo}}</textarea>
+        </div>
+        <h4 class="text-dark">Datos Biométricos</h4>
+            <div class="row text-center">
+             <div class="col-4">
+              <label for="confirm_password"> Foto:</label>
+             <a class="waves-effect waves-light text-dark btn p-2 text-center"  href="/facial"
+                   style="border-radius: 30px;" 
+                >
+                <i class="material-icons small rounded-circle " style="font-size:90px;"> 📷 
+                </i> 
+                <!-- photo_camera -->                     
+              </a> 
+            </div>
+
+            
+
+              <div class="col-4">
+                <label for="confirm_password">Huella:</label>
+                <a class="waves-effect waves-light text-dark btn p-2 text-center" style="" 
+                    href="#" style="border-radius: 30px;"
+                  >
+                  <i class="material-icons small rounded-circle " style="font-size:100px;">fingerprint
+                  </i>
+                </a>
+              </div>
+              <div class="col-4">
+                <label for="confirm_password">Voz:</label>
+                <a class="waves-effect waves-light text-dark btn p-2 text-center" style="" 
+                    href="#" style="border-radius: 30px;"
+                  >
+                  <i class="material-icons small rounded-circle " style="font-size:100px;">mic
+                  </i>
+                </a>
+              </div>              
+            
+                
+            </div>
+        <button class="btn btn-danger w-100" type="submit">
+          Guardar
+        </button>
+      </form>
+    
+</div>
+{% endblock %} 

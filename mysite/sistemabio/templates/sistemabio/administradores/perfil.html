@@ -1,0 +1,45 @@
+{% extends "sistemabio/base.html" %}
+{% load static %}
+{% block content %}
+    <header class="row" style="position: relative; height: 50vh; width: 100%;">
+        <div
+              class="col s12 m11 l9 xl8 "
+              style="position: absolute; top: 0px; height: 120%; left: 0px; right: 40px; width: 100%;"
+            >
+            <img alt="" src="{% static 'sistemabio/img/ba19_2.png' %} " 
+                    style="position: absolute; right: -12px; top: 20%; width: 100%; height:80%"
+                >
+            <img alt="" src="{% static 'sistemabio/img/ba19_4.png' %}"
+                    style="position: absolute;  right: -12px; top: 0px; width: 100%; height:90%">
+        </div>
+        <div class="col s4 hide-on-small-only" 
+            
+             style="position: absolute; top: 70%; left: 80%; height: 100%; transform: translate(-50%, -50%); width: 30%;" 
+        >
+            <h1 class="titulo" style="font-size:40px">
+              Perfil de <b> Administrador</b>
+            </h1>
+            <blockquote>
+              <h4 class="subtitulo black-text" style="font-size:20px">
+                <b>
+                  Aquí puedes visualizar tú <br /> información como Administrador
+                </b>
+              </h4>
+            </blockquote>
+        </div>
+ <!--style="height: 100%; position: absolute; top: 0%; right: 0%;"
+ style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;"
+ -->
+        <div class=" col s12 m9 l9 xl8 white-text" style="height: 100%; position: absolute; top: 0%; right: 50%;">
+          <img alt="" src="{% static 'sistemabio/img/parteba12_3.png' %}" 
+          class="responsive-img" style="position: absolute; right: 0px; top: 0px; height: 120%; width: 50%;">
+        </div>  
+    </header>
+      <br />
+      <br />
+      <br />
+  <div class="container p-5">
+        <h3 style="font-family: 'Franklin Gothic Medium'">Mi información</h3>       
+  </div>
+
+{% endblock %} 

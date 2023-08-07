@@ -1,0 +1,102 @@
+
+    <header class="row" style="position: relative; height: 50vh; width: 100%;">
+        <div
+              class="col s12 m11 l9 xl8 "
+              style="position: absolute; top: 0px; height: 120%; left: 0px; right: 40px; width: 100%;"
+            >
+            <img alt="" src="/img/ba5_1.png" 
+                    style="position: absolute; right: -12px; top: 20%; width: 100%; height:80%"
+                >
+            <img alt="" src="/img/ba6_1.png"
+                    style="position: absolute;  right: -12px; top: 0px; width: 100%; height:90%">
+        </div>
+        <div class="col s4 hide-on-small-only" 
+            
+             style="position: absolute; top: 70%; left: 80%; height: 100%; transform: translate(-50%, -50%); width: 30%;" 
+        >
+            <h1 class="titulo text-black" style="font-size:40px">
+              Buscador DE <b>usuarios</b>
+            </h1>
+            <blockquote>
+              <h4 class="subtitulo black-text" style="font-size:20px">
+                <b>
+                  Aquí puedes buscar los registros <br /> de los usuarios por nombre.
+                </b>
+              </h4>
+            </blockquote>
+        </div>
+ <!--style="height: 100%; position: absolute; top: 0%; right: 0%;"
+ style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;"
+ -->
+        <div class=" col s12 m9 l9 xl8 white-text" style="height: 100%; position: absolute; top: 0%; right: 50%;">
+          <img alt="" src="/img/parteba12_4.png" 
+          class="responsive-img" style="position: absolute; right: 0px; top: 0px; height: 120%; width: 50%;">
+        </div>  
+    </header>
+      <br />
+      <br />
+      <br />
+  <div class="container p-5">
+    <div class="row justify-content-end" >
+      <div class="col-6 align-self-center" >
+         <div class="container-fluid text-left bg-info p-2" style="--bs-bg-opacity: .5;">
+          <form class="d-flex " action="/administradores/search-usuarios" method="GET" >
+            <input class="form-control " 
+              type="text" name="buscar" placeholder="Search" aria-label="Search">
+            <!--input type="submit" value="Buscar" -->
+            <button class="btn btn-success" type="submit">
+              <span class="material-symbols-rounded">
+                search
+              </span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>        
+
+  <div class="row bg-success" style=" border: 0.5px solid rgb(147, 250, 118); margin: 25px 0px; --bs-bg-opacity:.5">
+    <div class="container text-center pt-5" style="font-family: 'Franklin Gothic Medium'">
+        <h3 class=" text-white">
+          Las coincidencias son:
+        </h3>
+      </div>
+  {{#each usuariosFound}}
+
+  <div class="col-md-3">
+    <br>
+    <div class="card">
+      <div class="card-body">
+         <!--h3 class="d-flex flex-row-reverse">
+          <a href="/visitantes/edit/{{_id}}"><i class="fas fa-edit"></i></a> 
+         </h3-->
+         Usuarios
+        <h4 class="card-title d-flex justify-content-between align-items-center">
+          
+         {{ nombre }}
+        </h4>
+        <p>Curp: {{ curp }} </p>
+        <!--p>No. Piso: {{ piso }} </p-->
+        <!--p>No. Departamento: {{ departamento }} </p-->
+        <p>No. Teléfono: {{ telefono }} </p>
+        <p>Correo: {{ correo }} </p>
+        <!-- DELETE REQUEST -->
+        <!--form action="/visitantes/delete/{{_id}}?_method=DELETE" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger btn-block btn-sm ">
+            <span class="material-icons me-1">delete</span>
+            Eliminar
+            </button>
+        </form-->
+      </div>
+    </div>
+    <br>
+  </div>
+  {{else}}
+  <div class="card mx-auto">
+    <div class="card-body">
+      <p clsss="lead">No hay ninguna coincidencia con los usuarios registrados.</p>
+    </div>
+  </div>
+  {{/each}}
+</div>
+</div>

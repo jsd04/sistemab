@@ -1,0 +1,323 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'sistemabio/style.css' %}">
+<head>
+    <title>Log in | Django site admin</title>
+    <link rel="stylesheet" href="/static/admin/css/base.css">
+    
+      <link rel="stylesheet" href="/static/admin/css/dark_mode.css">
+      <script src="/static/admin/js/theme.js" defer=""></script>
+    
+    
+      <link rel="stylesheet" href="/static/admin/css/nav_sidebar.css">
+      <script src="/static/admin/js/nav_sidebar.js" defer=""></script>
+    
+    <link rel="stylesheet" href="/static/admin/css/login.css">
+    <!--href="{C:\Users\jsanchezd01\Documents\GitHub\sistemabio\mysite\sistemabio\static\admin\css\login.css %}">-->
+    
+    
+    
+    
+    
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="/static/admin/css/responsive.css">
+        
+    
+    <meta name="robots" content="NONE,NOARCHIVE">
+    </head>
+
+<body class=" login" data-admin-utc-offset="0">
+    <a href="#content-start" class="skip-to-content-link">Skip to main content</a>
+    <!-- Container -->
+    <div id="container">
+   
+        
+        <!-- Header -->
+        
+        <div id="header">
+            <div id="branding">
+            
+                <h1 id="site-name"><a href="/admin/">System R&amp;S administration</a></h1>
+                <!--
+                <h1 id="site-name"><a href="/admin/">Django administration</a></h1>
+                -->
+            </div>
+        </div>
+        
+        <!-- END Header -->
+        <div class="main" id="main">
+          <div id="content-start" class="content" tabindex="-1">
+            <!-- Content -->
+            <div id="content" class="colM">
+                <div id="content-main">
+                
+                
+                
+                <form action="/admin/login/?next=/admin/" method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="PgBCUSLMWIVg06KJA8UtEK9KRYifVoqM9uyQeWMh7UpyUPJpLec2h8PbWelVfZfT">
+                <div class="form-row">
+                    
+                    <label for="id_username" class="required">Username:</label> <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+                </div>
+                <div class="form-row">
+                    
+                    <label for="id_password" class="required">Password:</label> <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+                    <input type="hidden" name="next" value="/admin/">
+                </div>
+                
+                
+                <div class="submit-row">
+                    <input type="submit" value="Log in">
+                </div>
+                </form>
+                <div class="submit-row">
+                <a class="btn btn-outline-info" href="/sistemabio/signup">
+                <!--href="/sistemabio/signup">--> 
+                    Registrarse
+                    <i class="material-icons right">edit_note</i>
+                </a>
+                </div>
+              
+                
+                </div>  
+            <br class="clear">
+            </div>
+            <!-- END Content -->
+            <div id="footer"></div>
+          </div>
+        </div>
+    </div>
+    <!-- END Container -->
+    
+  
+    
+    
+
+
+
+<div class="col s6 center">
+    <a class="btn btn-outline-info" href="/sistemabio/signup">
+        Registrarse
+        <i class="material-icons right">edit_note</i>
+    </a>
+</div>
+    </body>
+
+
+    <main style="position: relative; overflow: hidden; width: 100%; max-width: 1600px; margin: auto; min-height: 100vh;">
+        <img src="{% static 'sistemabio/img/Vector3.png' %}" alt="" 
+            style="position: absolute; width: 1616px; height: 1148px; top: -800px; right: -200px; z-index: -1;"
+        >
+        <div class="row">
+            <div class="col s12 l6" style="padding: 0px 4%;">
+                <br>
+                <h1 class="header   blue-grey-text text-darken-3" 
+                    style="font-size: 3.1rem; font-weight: 500; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"
+                >
+                 R & S Biométric
+                </h1>
+                <br>
+                <blockquote>
+                    <h4 style="font-size: 1.7rem; font-family:'Calibri'"
+                     >
+                     <b>
+                      Registro de información de usuarios del edificio de condominio
+                    </b> 
+                    </h4>
+                </blockquote>
+            </div>
+            <div class="col s12  l6 center">
+                <img class="d-block w-100" src="{% static 'sistemabio/img/logo_ipn_guinda.svg' %}" alt="First slide" height="200px" >
+            </div>    
+        </div>
+        <div>
+            <img alt="" class="hide-on-small-only" src="{% static 'sistemabio/img/welcome.png' %}" 
+                style="display: inline-block; width: 100%; margin: -100px auto auto;"
+            >
+        </div>
+        <div class="row">
+            <div class="col-4 center">
+                 <img src="{% static 'sistemabio/img/upiita-logo.png' %}" alt="First slide" height="150px" >
+            </div>
+            <div class="col-8 center ">
+                <div class="row ">
+                    <div class="col s6 center">
+                        <a class=" active btn" href="/administradores/signin">
+                            Iniciar Sesión
+                            <i class="material-icons right">send</i>
+                        </a>
+                    </div>
+                    <div class="col s6 center">
+                        <a class="btn btn-outline-info" href="/administradores/signup">
+                            Registrarse
+                            <i class="material-icons right">edit_note</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+                
+        </div> 
+   
+        <div class="col-4">
+            <label for="confirm_password"> Foto:</label>
+                  <!-- Button trigger modal  -->
+                  <a class="waves-effect waves-light text-dark btn p-2 text-center"  href="/facial"
+                       style="border-radius: 30px;" 
+                    >
+                    <i class="material-icons small rounded-circle " style="font-size:90px;"> 📷 
+                    </i> 
+                    <!-- photo_camera -->                     
+                  </a> 
+    
+        </div>
+        
+                <!-- Modal -->
+                
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content text-dark">
+                      <div class="modal-header bg-success" style="--bs-bg-opacity: .5;">
+                        <h1 class="modal-title" id="staticBackdropLabel">Captura el rostro</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                         <div class="modal-body">
+                            <div class="container">
+                              
+                                
+                                <div class="row">
+                                <div class="col ">
+                                    <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href = '/tomarFoto'">Capturar</button>
+                                    </div>
+    
+                                </div>
+                                
+                                </div>
+                                 
+                                 
+                            </div>
+                         </div>
+    
+    
+                      <div class="modal-footer bg-success" style="--bs-bg-opacity: .5;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.body.removeChild(document.querySelector('img'))">Aceptar</button>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               
+                <div class="col-4">
+                  <label for="confirm_password">Huella:</label>
+                  <a class="waves-effect waves-light text-dark btn p-2 text-center" href="/huella" 
+                       style="border-radius: 30px;" 
+                    >
+                    <i class="material-icons small rounded-circle " style="font-size:100px;">fingerprint
+                    </i>
+                  </a>
+                </div>
+                 <!-- Modal Huella-->
+                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content text-dark">
+                      <div class="modal-header bg-success" style="--bs-bg-opacity: .5;">
+                        <h1 class="modal-title" id="staticBackdropLabel">Captura la huella</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                           <div class="container">
+                              <div class="row">
+                                  <div class="col ">
+                                    
+                                      Aqui se hace la toma de muestras de la huella
+                                      <br>
+                                    <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href = '/tomarFoto'">Capturar Huella</button>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                      </div>
+                      <div class="modal-footer bg-success" style="--bs-bg-opacity: .5;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               
+    
+                <div class="col-4">
+                  <label for="confirm_password">Voz:</label>
+                  <a class="waves-effect waves-light text-dark btn p-2 text-center" href="/voz" 
+                       style="border-radius: 30px;" 
+                    >
+                    <i class="material-icons small rounded-circle " style="font-size:100px;">mic
+                    </i>
+                  </a>
+                </div>   
+                   <!-- Modal Voz-->
+                <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content text-dark">
+                      <div class="modal-header bg-success" style="--bs-bg-opacity: .5;">
+                        <h1 class="modal-title" id="staticBackdropLabel">Captura la voz</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                           <div class="container">
+                              <div class="row">
+                                  <div class="col ">
+                                    
+                                      Aqui se hace la captura de voz
+                                      <br>
+    <!--
+                                        <div>
+                                            <select name="listaDeDispositivos" id="listaDeDispositivos"></select>
+                                            <br><br>
+                                            <p id="duracion"></p>
+                                            <br>
+                                            <button id="btnComenzarGrabacion">
+    
+                                                🎙️ Comenzar ▶️</button>
+                                            <button id="btnDetenerGrabacion"> ⏸️ Detener</button>
+                                        </div>
+                                        <script type="text/javascript" src="webcamjs/voz.js"></script>
+                                        <br>
+                                        <br>
+                                        -->
+                                        <!--
+                                        <script type="text/javascript" src="C:/Users/yobis/Desktop/Proyectos/pt/SistemaBiometricoPT/Interfaz/Administrador/src/views/voz.js"></script>
+                                        <script type="text/javascript" src="C:/Users/yobis/Desktop/Proyectos/pt/SistemaBiometricoPT/Interfaz/Administrador/src/views/administradores/tomar_voz.js"></script>
+                                      
+                                       <center>
+                                        <h1>Audio Clip Recorder</h1>
+                                        <p><button id="record">Record</button></p>
+                                        <div id="sound-clip"></div>
+                                      </center>
+                                      
+                                      <script type="text/javascript" src="voiceMemo.js"></script>  -->
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/tomarVoz'">Capturar Voz</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/tomarFoto'">Capturar</button>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                      </div>
+                      <div class="modal-footer bg-success" style="--bs-bg-opacity: .5;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+    <center>
+                                        <h1>Audio Clip Recorder</h1>
+                                        <p><button id="record">Record</button></p>
+                                        <div id="sound-clip"></div>
+                                      </center>
+                                      
+                                      <script type="text/javascript" src="/biometricos/voiceMemo.js"></script>
+        <img src="{% static 'sistemabio/img/ellipse1.png' %}" alt="" 
+            style="position: absolute; width: 1616px; height: 1148px; left: 100px; bottom: -900px; z-index: -1;"
+        >
+    </main>

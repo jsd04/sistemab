@@ -1,0 +1,189 @@
+
+
+<header class="row" style="position: relative; height: 50vh; width: 100%;" >
+        <div
+          class="col s12 m11 l9 xl8 "
+          style="position: absolute; top: 0px; height: 110%; left: 0px;"
+        >
+          <img
+            alt="imagen1"
+            src="/img/ba11.png"
+            class="responsive-image" 
+            style="height: 120%; width: 80%; left: 0px; top: 0px; position: absolute; object-fit: cover;"
+          />
+        </div>
+        <div class="col s12 m9 l9 xl8 white-text" 
+             style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;"
+        >
+            <h1 class="titulo">
+              EDICION DE <b>ADMINISTRADOR</b>
+            </h1>
+            <br>
+            <blockquote>
+              <h3 class="subtitulo black-text">
+                <b>
+                  Aquí puedes editar tú <br /> información como <br /> administrador
+                </b>
+              </h3>
+            </blockquote>
+        </div>
+        
+        <div class="col m6 l6 xl5 hide-on-small-only" style="height: 100%; position: absolute; top: 0%; right: 0%;">
+          <img alt="" src="/img/parteba8_2.png" 
+          class="responsive-img" style="position: absolute; right: 10px; top: 0px; height: 100%; width: 50%;">
+        </div>
+        
+      </header>
+      <br />
+      <br />
+      <br />
+      <div class="row justify-content-end">
+        <div class="col-3 align-self-end">
+          <a class="waves-effect waves-light text-white btn p-2 text-center  " style="background: rgb(29, 240, 134);border-radius: 20px;"
+                    href="javascript:window.history.back(); " style=""
+                > 
+            <i class="material-icons  text-white large rounded-circle btn p-2 text-center">arrow_back
+            </i>       Regresar              
+          </a>
+        </div>
+      </div>
+    <br />
+
+{{#each errors}}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{text}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{{/each}}
+
+<div class="col-md-4 mx-auto">
+  <div class="card">
+    <div class="card-header bg-danger text-center" style="--bs-bg-opacity: .7;">
+      <h3>Editar Administrador</h3>
+    </div>
+    <div class="card-body bg-danger p-2" style="--bs-bg-opacity: .3;">
+      <form action="/administradores/edit-admin/{{admin._id}}?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT" />
+        <div class="mb-3">
+          <label for="name">Nombre:</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              value="{{admin.name}}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description">Correo:</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            value="{{admin.email}}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description">No. Teléfono:</label>
+          <input
+            type="telefono"
+            name="telefono"
+            class="form-control"
+            value="{{admin.telefono}}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description">Domicilio:</label>
+          <textarea
+            name="domicilio"
+            class="form-control"
+          >{{admin.domicilio}}</textarea>
+        </div>
+        <h4 class="text-dark">Datos Biométricos</h4>
+          <div class="row text-center">
+            <div class="col-4">
+              <label for="confirm_password">Foto:</label>
+              <a class="waves-effect waves-light text-dark btn p-2 text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                   style="border-radius: 30px;" 
+                >
+                <i class="material-icons small rounded-circle " style="font-size:100px;">photo_camera
+                </i>
+              </a>
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content text-dark">
+                  <div class="modal-header bg-success" style="--bs-bg-opacity: .5;">
+                    <h1 class="modal-title" id="staticBackdropLabel">Captura el rostro</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                       <div class="container">
+                          <div class="row">
+                              <div class="col ">
+                                
+                                  Aqui se hace la captura de imágenes del rostro
+                                  <br>
+                                <div class="input-group" >
+                                    <input type="file" name="myImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                      style="background: rgb(141, 185, 232);"
+                                      > 
+                                </div>
+
+                                  <!--div class="card">
+                                      <div class="card-header text-center">
+                                          <h5>Aqui se hace la captura de imágenes del rostro</h5>
+                                      </div>
+                                      <div class="card-body">
+                                        <div class="input-group" >
+                                          <input type="file" name="myImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                          style="background: rgb(141, 185, 232);"
+                                           > 
+                                        </div>
+                                      </div>
+                                  </div-->
+                              </div>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer bg-success" style="--bs-bg-opacity: .5;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-4">
+              <label for="confirm_password">Huella:</label>
+              <a class="waves-effect waves-light text-dark btn p-2 text-center" style="" 
+                   href="#" style="border-radius: 30px;"
+                >
+                <i class="material-icons small rounded-circle " style="font-size:100px;">fingerprint
+                </i>
+              </a>
+            </div>
+            <div class="col-4">
+              <label for="confirm_password">Voz:</label>
+              <a class="waves-effect waves-light text-dark btn p-2 text-center" style="" 
+                   href="#" style="border-radius: 30px;"
+                >
+                <i class="material-icons small rounded-circle " style="font-size:100px;">mic
+                </i>
+              </a>
+            </div>              
+          
+              
+          </div>
+        
+        <button class="btn btn-danger w-100" type="submit">
+          Guardar
+        </button>
+      </form>
+     </div>
+  </div> 
+</div>

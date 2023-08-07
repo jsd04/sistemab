@@ -1,0 +1,31 @@
+
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+        <div class="card animated flipInY bg-info p-3 border-secondary" style="--bs-bg-opacity: .5;">
+          <div class="card-header bg-info text-white text-center" >
+            Contacto
+          </div>
+          <div class="card-body">
+            <form action="/contact" method="POST">
+              <div class="mb-3">
+                <label for="email">Correo:</label>
+                <input class="form-control" type="text" placeholder="someone@example.com" />
+              </div>
+              <div class="mb-3">
+                <label for="message">Mensaje:</label>
+                <textarea
+                  class="form-control"
+                  name=""
+                  cols="10"
+                  rows="5"
+                  placeholder="Mensaje"
+                ></textarea>
+              </div>
+              <button class="btn btn-info btn-block">Enviar
+                <span class="material-symbols-rounded">
+                  send
+                </span>
+              </button>
+            </form>
+          </div>
+        </div>
+    </div>

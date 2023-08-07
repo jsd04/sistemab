@@ -1,0 +1,30 @@
+/* li a{
+    color: green;
+}
+h1 {
+    color: aqua;
+}
+body {
+    background: white url("images/background.png") no-repeat;
+} */
+/* input, select{
+    position: relative;
+  height: 50px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: rgb(107, 107, 107);
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+} */
+table,.table-wrapper,th, td {
+    border-spacing: 1px;
+    border-left-width: 1px;
+  }
+/* th, td {
+    padding: 75px;
+    /* border-left-width: 1px; */
+    /* border-left-width: 1px; */
+    /* 
