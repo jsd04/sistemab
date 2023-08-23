@@ -255,6 +255,11 @@ def facial(request):
      return render (request,'sistemabio/facial.html',{
           'mytitle':title
      })
+def voz(request):
+     title='Voz'
+     return render (request,'sistemabio/voz.html',{
+          'mytitle':title
+     })
 
 
 

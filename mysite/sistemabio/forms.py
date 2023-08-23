@@ -24,17 +24,12 @@ class SesionForm(ModelForm):
     class Meta:
         model = Sesion
         fields = ['id_usuario', 'id_tipo_sesion', 'dato' ]
-    # def __init__(self, *args,**kwargs):
-    #     super(SesionForm).__init__(*args,**kwargs)
-    #     self.fields['id_tipo_sesion'].widget.attrs.update({
-    #         'class': 'form-control'
-    #     })
-    #     self.fields['id_usuario'].widget.attrs.update({
-    #         'class': 'form-control'
-    #     })
-    #     self.fields['dato'].widget.attrs.update({
-    #         'class': 'form-control'
-    #     })
+    def __init__(self, *args,**kwargs):
+        super(SesionForm,self).__init__(*args,**kwargs)
+        self.fields['id_tipo_sesion'].widget.attrs['class']='form-control'
+        self.fields['id_usuario'].widget.attrs['class']= 'form-control'
+        self.fields['dato'].widget.attrs['class']= 'form-control'
+    
 
 
 

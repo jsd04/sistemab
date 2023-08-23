@@ -1,0 +1,91 @@
+
+{% extends "sistemabio/base.html" %}
+{% load static %}
+{% block content %}
+ 
+
+<header class="row" style="position: relative; height: 50vh; width: 100%;">
+  <div class="col s12 m11 l9 xl8 " style="position: absolute; top: 0px; height: 60%; left: 0px;">
+    <img alt="imagen1" src="{% static 'sistemabio/img/rec4.png' %}" class="responsive-image"
+      style="height: 200%; width: 80%; left: 0px; top: 0px; position: absolute; object-fit: cover;" />
+  </div>
+  <div class="col s12 m9 l9 xl8 white-text"
+    style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;">
+    <br>
+    <br>
+    <blockquote>
+
+      <h2 class="subtitulo black-text ">
+        <b>
+          VOZ <br />
+        </b>
+      </h2>
+    </blockquote>
+  </div>
+
+  <div class="col m6 l6 xl5 hide-on-small-only" style="height: 100%; position: absolute; top: 0%; right: 0%;">
+    <img alt="" src="{% static 'sistemabio/img/parteba9.png' %}" class="responsive-img"
+      style="position: absolute; right: -5px; top: 0px; height: 100%; width: 50%;">
+  </div>
+</header>
+<br />
+<br />
+<br />
+
+<div class="col-md-8 mx-auto">
+  <div class="card">
+    <div class="card-header bg-success text-center" style="--bs-bg-opacity: .7;">
+      <h3 class="text-white">Captura la voz
+        <i class="material-icons small rounded-circle " style="font-size:40px;">mic
+        </i>
+      </h3>
+    </div>
+    <div class="card-body text-left bg-success " style="--bs-bg-opacity: .3;">
+      <div class="container">
+        <div class="row">
+          <div class="col ">
+
+            <p class="text-black" style="font-family: 'Franklin Gothic Medium'; font-size: 20px;">
+              <b>Aquí se realiza la captura de voz</b>
+            </p>
+            <br>
+            <p>
+              Al oprimir el boton de "Record" dirás la siguiente frase:
+              "Acceso al edificio RS"
+            </p>
+            <div class="row justify-content-center">
+              <div class="col-4 aling-self-center">
+                <button type="button " class="btn btn-warning " id="record">Record</button>
+              </div>
+            </div>
+            <br>
+            <div class="col-6 aling-self-center">
+              <div id="sound-clip"></div>
+            </div>
+            <br>
+
+            <script src="{% static 'sistemabio/biometricos/voiceMemo.js' %}"></script>
+
+          </div>
+        </div>
+        <!-- ******EL BOTON DE ACEPTAR SOLO REGRESA ******* -->
+        <div class="row justify-content-end">
+          <div class="col-4 align-self-end">
+            <a class="waves-effect waves-light text-white btn p-2 text-center  "
+              style="background: rgb(29, 240, 134);border-radius: 20px;" href="javascript:window.history.back(); ">
+              Aceptar
+              <i class="material-icons small rounded-circle " style="font-size:20px;">mic
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+
+<br>
+{% endblock %}
