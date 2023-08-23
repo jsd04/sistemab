@@ -91,7 +91,16 @@
          <p>No. Departamento: {{ inquilino.departamento }} </p>
          <p>No. Teléfono: {{ inquilino.telefono }} </p>
          <p>Correo: {{ inquilino.correo }} </p>
+         <p>Fecha de nacimiento: {{inquilino.fecha_nac }}</p>
+         <p>Fecha de creación: {{ inquilino.creado }}</p>
+         <p>Fecha de actualización: {{ inquilino.actualizado }}</p>
          <h1>Datos Biométricos</h1>
+         <!-- {% for sesion in sesiones  %} -->
+         <p>Id de sesion: {{inquilino.id_sesion}}   
+          Id tipo de sesion: {{id_tipo_sesion}}</p>
+          <!-- {% endfor %} -->
+         <input name="completado" type="checkbox" value="completado"/>
+
           <ul class="list-group list-group-unbordered mb-3">
             <li class="list-group-item">
             <b>Facial</b> <a class="float-right">1,322</a>

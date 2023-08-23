@@ -75,7 +75,7 @@
     </div>        
 
   <div class="row" style=" border: 0.5px solid rgb(232, 142, 7); margin: 25px 0px; background:rgb(254, 218, 151)">
-    
+   
 <!---->
 {% for inquilino in inquilinos %}
   <div class="col-md-3">
@@ -96,6 +96,16 @@
           <p>Curp: {{ inquilino.curp }} </p>
           <p>No. Piso: {{ inquilino.piso }} </p>
           <p>No. Departamento: {{ inquilino.departamento }} </p>
+          <!-- {% for sesion in sesiones %} -->
+            <p>Id sesion: {{ sesion.id_sesion }}</p>
+            <p>id_usuario: {{sesion.id_usuario}}</p>
+            <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+            <p>dato :{{sesion.dato }}</p>
+            <p> fecha_creacion de usuario: {{sesion.fecha_creacion}} </p>
+            <p> fecha_actualizacion de usuario: {{sesion.fecha_actualizacion}}</p>
+              
+            
+          <!-- {% endfor %} -->
         </div>
       </div>
     <br>
@@ -113,8 +123,8 @@
                       <th style="border-spacing: 1px;" >Nombre</th>
                       <th border-left-width: 1px; >Tipo de usuario </th>
                       <th>No. Piso </th>
-                      <th>No. Departamento</th>
-                      <th>Fecha de creación</th>
+                      <th>No. Dep</th>
+                      <th>Datos biometricos</th>
                       <th>Actions _____  </th>
                   </tr>
               </thead>
@@ -125,7 +135,13 @@
                       <td>{{ inquilino.id_perfil }} </td>
                       <td>{{ inquilino.piso }}</td>
                       <td>{{ inquilino.departamento }}</td>
-                      <td>{{ inquilino.creado }}</td>
+        
+                      <td>
+                      {% for sesion in sesiones %}
+                      Tipo sesion: {{ sesion.id_tipo_sesion }} 
+                      <input name="completado" type="checkbox" value="completado" /> 
+                      <br> 
+                      {% endfor %}
                       <td>
                           <a href="{% url 'sistemabio:detail_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
                             <i class="fas fa-eye" style='font-size:24px;color:rgb(61, 149, 249)'></i>
@@ -143,10 +159,11 @@
               </tbody>
           </table>
           <div class="clearfix">
-              <div class="hint-text">Showing <b>5</b> out of <b>{{inquilinos.length}}25</b> entries</div>
-              <ul class="pagination">
-                  <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                  <li class="page-item"><a href="#" class="page-link">1</a></li>
+              <p>Total de registros: {{count}}  pagina numero: {{page.number}}</p>
+              <div class="hint-text">Mostrando<b>5</b> out of <b>{{inquilinos |length }}</b> registros</div>
+              <ul class="pagination justify-content-end " >
+                  <li class="page-item "><a href="#"class="page-link bg-info"><i class="fa fa-angle-double-left"></i></a></li>
+                  <li class="page-item disabled"><a href="#" class="page-link">1</a></li>
                   <li class="page-item"><a href="#" class="page-link">2</a></li>
                   <li class="page-item active"><a href="#" class="page-link">3</a></li>
                   <li class="page-item"><a href="#" class="page-link">4</a></li>
@@ -154,6 +171,7 @@
                   <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
               </ul>
           </div>
+          
       </div>
   </div>  
 </div>

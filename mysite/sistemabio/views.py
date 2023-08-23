@@ -16,10 +16,11 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
-from .models import Usuario
-from .forms import InquilinoForm
+from .models import Usuario, Sesion
+from .forms import InquilinoForm, SesionForm
 
 
 #Administrador e Index
@@ -82,7 +83,7 @@ def signin(request):
 @login_required
 def principal(request):
      title='Principal Administrador'
-     return render (request,"sistemabio/principal.html",{
+     return render (request,"sistemabio/principal_2.html",{
           'mytitle':title
      })
 @login_required
@@ -108,23 +109,30 @@ def administradores(request):
      })
 
 #Inquilinos
-def inquilinosinicial(request):
-     title='Inquilinos Inicial'
-     return render (request,"sistemabio/inquilinos/inquilinos_inicial_copy.html",{
-          'mytitle':title
-     })
+# def inquilinosinicial(request):
+#      title='Inquilinos Inicial'
+#      return render (request,"sistemabio/inquilinos/inquilinos_inicial_copy.html",{
+#           'mytitle':title
+#      })
 def inquilinos(request):
      inquilinos = Usuario.objects.all()
+     paginacion = Paginator(inquilinos,20)
+     page_num = request.GET.get('page')
+     page = paginacion.get_page(page_num)
      title='Inquilinos'
+     sesiones = Sesion.objects.all()
      return render (request,"sistemabio/inquilinos/all-inquilinos.html",{
           'mytitle':title,
-          'inquilinos':inquilinos
+          'count': paginacion.count,
+          'inquilinos':inquilinos,
+          'sesiones': sesiones
      })
 @login_required
 def new_inquilino(request):
      if request.method == "GET":
+        form=  InquilinoForm
         return render(request, 'sistemabio/inquilinos/new-inquilino.html', 
-                      {"form":  InquilinoForm})
+                      {"form":  InquilinoForm })   
      else:
         # print(request.POST)
         # return render(request, 'sistemabio/inquilinos/new-inquilino.html', {"form":  InquilinoForm})
@@ -133,11 +141,34 @@ def new_inquilino(request):
             new_inquilino = form.save(commit=False)
             new_inquilino.save()
             messages.success(request," El registro ha sido un éxito.")
-            return redirect('/sistemabio/inquilinos/')
+            return redirect('/sistemabio/new_biometricos/')
         except ValueError:
             messages.error(request, "Error no se creo el inquilino.")
             return render(request, 'sistemabio/inquilinos/new-inquilino.html', 
-                          {"form":  InquilinoForm, "error": "Error creando el inquilino."})
+                          {"form":  InquilinoForm , 
+                           "error": "Error creando el inquilino."})
+     
+@login_required
+def new_biometricos(request):
+     if request.method == "GET":
+        form= SesionForm
+        return render(request, 'sistemabio/inquilinos/new-biometricos.html', 
+                      {"form": SesionForm 
+                       })   
+     else:
+        # print(request.POST)
+        # return render(request, 'sistemabio/inquilinos/new-inquilino.html', {"form":  InquilinoForm})
+        try:
+            form = SesionForm(request.POST)
+            new_biometricos = form.save(commit=False)
+            new_biometricos.save()
+            messages.success(request," El registro biométrico ha sido un éxito.")
+            return redirect('/sistemabio/new_biometricos/')
+        except ValueError:
+            messages.error(request, "Error no se registro el biométrico.")
+            return render(request, 'sistemabio/inquilinos/new-biometricos.html', 
+                          {"form":  SesionForm,
+                           "error": "Error registrando el biométrico."})
         
 def search_inquilino(request):
      #buscar por tipo de usuario
@@ -218,7 +249,12 @@ def edit_inquilino(request, usuario_id):
             return render(request, 'sistemabio/inquilinos/edit-inquilino.html', 
                           {'inquilino': inquilino, "form":  InquilinoForm, "error": "Error actualizando el inquilino."})
 
-
+# Datos biométricos
+def facial(request):
+     title='Facial'
+     return render (request,'sistemabio/facial.html',{
+          'mytitle':title
+     })
 
 
 

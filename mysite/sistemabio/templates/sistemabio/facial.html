@@ -1,8 +1,10 @@
+
+{% extends "sistemabio/base.html" %}
 {% load static %}
+{% block content %}
  <!-- Webcam.min.js-->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> 
-    
+      
     <header class="row" style="position: relative;  height: 30vh; width: 100%;" >
         <div
           class="col s12 m11 l9 xl8 "
@@ -51,10 +53,8 @@
       </h3>
     </div>
     <div class="card-body text-left bg-success "style="--bs-bg-opacity: .3;">
-      <form action="/inquilinos/edit-inquilino/{{inquilino._id}}?_method=PUT" method="POST" enctype="multipart/form-data" >
-    <!--     <form action="/inquilinos/new-inquilino" method="POST" enctype="multipart/form-data">
-   "/inquilinos/edit-inquilino/{{inquilino._id}}?_method=PUT"-->
-
+      <form action="/sistemabio/new_biometricos/" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %} 
       <div class="container">
           <div class="row ">
               <div class="col">
@@ -81,7 +81,7 @@
                       -->
                       <div id="results" ></div>
                         <br>
-                        <input type="text"  id="cara" name ="cara" />
+                        <input type="text"  id="dato" name ="dato" /> 
                          <!-- document.getElementById("results").value-->
                      <script language="JavaScript">
                        Webcam.set({
@@ -92,11 +92,11 @@
                         });
 
                         Webcam.attach('#my_camera');
-                        path="C:/Users/yobis/Desktop/Proyectos/pt/SistemaBiometricoPT/Interfaz/Administrador/src/public/fotos/"
+                        path="C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/sistemabio/fotos/"
                         var numPhotos = 10; // Número total de fotos que se van a capturar
                         var photoCounter = 0; // Contador de fotos capturadas
                         function takeSnapshotAndSend() {
-                         // for (var i = 0; i <numPhotos; i++) {
+                         for (var i = 0; i <numPhotos; i++) {
                             // Tomar la instantánea y obtener los datos de la imagen
                             Webcam.snap(function(data_uri) {
                                // display results in page
@@ -105,21 +105,21 @@
                             '<img id="imageprev" src="'+data_uri+'"/>';
                             var valor = document.getElementById("results").innerHTML;
                             console.log("valor",valor);
-                             document.getElementById("cara").value = valor ;
+                             document.getElementById("dato").value = valor ;
                             console.log("valor2",valor);
                            
-                              //var valor =data_uri
+                              var valor =data_uri
                               // Generar un nombre de archivo único para la imagen
                               var fileName = 'imagen_' + photoCounter + '.png';
 
                               // Guardar la imagen localmente con el nombre de archivo generado
-                              // var saveUrl = path + fileName; // Ruta y nombre de archivo para guardar la imagen
+                              var saveUrl = path + fileName; // Ruta y nombre de archivo para guardar la imagen
                               // Incrementar el contador de fotos capturadas
                               photoCounter++;
                               console.log("Foto tomada ", photoCounter)
-                             // savAs(data_uri)
+                              
                           }); 
-                      //}
+                      }
                       console.log("Total de Fotos tomadas ", photoCounter)
                      }
                     </script>
@@ -132,7 +132,7 @@
           <div class="row justify-content-end">
           <div class="col-4 align-self-end">
            
-            <input id = "team_name" type="text" name ="name_field" value="Ejemplo" />
+            <input id = "team_name" type="text" name ="name_field" value="Ejemplo3" />
 
             <button class="btn btn-info w-100" type="submit">
               Guardar 
@@ -152,3 +152,6 @@
   </div>
 </div>
 <br>
+
+
+{% endblock %}

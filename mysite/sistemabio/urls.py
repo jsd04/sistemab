@@ -15,8 +15,9 @@ urlpatterns = [
     path ("administradores", views.administradores, name="administradores"),
 
     #Inquilinos
-    path("inquilinosinicial/", views.inquilinosinicial, name="inquilinosinicial"),
+    # path("inquilinosinicial/", views.inquilinosinicial, name="inquilinosinicial"),
     path("inquilinos/",views.inquilinos, name="inquilinos"),
+    path("new_biometricos/", views.new_biometricos, name="new_biometricos"),
     path("new_inquilino/",views.new_inquilino, name="new_inquilino"),
     path("search_inquilino/",views.search_inquilino, name="search_inquilino"),
     # path("search_inquilino/<int:inquilino_para>",views.search_inquilino, name="search_inquilino"),
@@ -24,9 +25,9 @@ urlpatterns = [
     path("delete_inquilino/<int:inquilino_id>/", views.delete_inquilino, name="delete_inquilino"),
     path("edit_inquilino/<int:usuario_id>/", views.edit_inquilino, name="edit_inquilino"),
 
-    #Visitantes
+    #Datos biométricos
+    path("facial",views.facial, name="facial"),
 
-    #Trabajadores
 
 
     
