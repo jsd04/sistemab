@@ -62,10 +62,10 @@ class InquilinoForm(forms.ModelForm):
    
 
 class SesionForm(ModelForm):
-    opcion = forms.ChoiceField(choices=[('facial', 'Facial'), ('huella', 'Huella'), ('voz', 'Voz')])
+    # opcion = forms.ChoiceField(choices=[('facial', 'Facial'), ('huella', 'Huella'), ('voz', 'Voz')])
     class Meta:
         model = Sesion
-        fields = ['id_usuario', 'id_tipo_sesion', 'dato', 'opcion' ]
+        fields = ['id_usuario', 'id_tipo_sesion', 'dato' ]
     def __init__(self, *args,**kwargs):
         super(SesionForm,self).__init__(*args,**kwargs)
         self.fields['id_tipo_sesion'].widget.attrs['class']='form-control'
