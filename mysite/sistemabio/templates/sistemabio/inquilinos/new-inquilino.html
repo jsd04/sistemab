@@ -57,9 +57,9 @@
         <div class="card-body text-left bg-success  p-2" style="--bs-bg-opacity: .3;">
           <form action="/sistemabio/new_inquilino/" method="POST" enctype="multipart/form-data">
             {% csrf_token %} 
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <br>{{form.as_p}}     
-            </div>
+            </div> -->
             <div class="mb-3">
               <label for="nombre">Nombre:</label>
               <input
@@ -150,10 +150,10 @@
               autofocus
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-3" >
               <label for="id_perfil">Perfil de Usuario:</label>
               <br>
-                <select name="id_perfil" required>
+                <select class="form-control" name="id_perfil" required >
                   <option value="1">Administrador</option>
                   <option value="2">Usuario Inquilino </option>
                   <option value="3">Usuario Visitante </option>
@@ -163,7 +163,7 @@
             <div class="mb-3">
               <label for="id_status">Status:</label>
               <br>
-                <select name="id_status" required>
+                <select class="form-control" name="id_status" required>
                   <option value="1">ALTA</option>
                   <option value="2"> BAJA </option>
                   <option value="3"> PENDIENTE </option>
@@ -180,6 +180,8 @@
         </div>
       </div>
     </div>
-
+  <br>
+  <br>
+    
 {% endblock %}
  

@@ -96,16 +96,18 @@
           <p>Curp: {{ inquilino.curp }} </p>
           <p>No. Piso: {{ inquilino.piso }} </p>
           <p>No. Departamento: {{ inquilino.departamento }} </p>
-          <!-- {% for sesion in sesiones %} -->
-            <p>Id sesion: {{ sesion.id_sesion }}</p>
-            <p>id_usuario: {{sesion.id_usuario}}</p>
-            <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
-            <p>dato :{{sesion.dato }}</p>
-            <p> fecha_creacion de usuario: {{sesion.fecha_creacion}} </p>
-            <p> fecha_actualizacion de usuario: {{sesion.fecha_actualizacion}}</p>
-              
+           {% for sesion in sesiones %} 
+             {% if sesion.id_usuario_id == inquilino.id_usuario %}
+                        
+              <p>Id sesion: {{ sesion.id_sesion }}</p>
+              <p>id_usuario: {{sesion.id_usuario}}</p>
+              <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+              <p>dato :{{sesion.dato }}</p>
+              <p> fecha_creacion de usuario: {{sesion.fecha_creacion}} </p>
+              <p> fecha_actualizacion de usuario: {{sesion.fecha_actualizacion}}</p>
+             {% endif %} 
             
-          <!-- {% endfor %} -->
+           {% endfor %} 
         </div>
       </div>
     <br>
@@ -138,9 +140,14 @@
         
                       <td>
                       {% for sesion in sesiones %}
-                      Tipo sesion: {{ sesion.id_tipo_sesion }} 
-                      <input name="completado" type="checkbox" value="completado" /> 
-                      <br> 
+                        {% if sesion.id_usuario_id == inquilino.id_usuario %}
+                        
+                          Tipo sesion: {{ sesion.id_tipo_sesion }} 
+                          <input name="completado" type="checkbox" value="completado" /> 
+                          <br> 
+                        
+                        {% endif %}
+                        
                       {% endfor %}
                       <td>
                           <a href="{% url 'sistemabio:detail_inquilino' inquilino.id_usuario %}" style="text-decoration:none">

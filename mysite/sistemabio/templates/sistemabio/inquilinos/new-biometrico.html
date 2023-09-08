@@ -64,27 +64,7 @@
                   <br>{{form.as_p}}     
                 </div>
                 <div class="row text-center">
-                  <div class="col-4">
-                    <label for="confirm_password">Foto:</label>
-                    <a class="waves-effect waves-light text-dark btn p-2 text-center" href="{% url 'sistemabio:facial' %}" style="border-radius: 30px;" id="facial-option" disabled="true">
-                        <i class="material-icons small rounded-circle " style="font-size:90px;">📷</i>
-                    </a>
-                </div>
-                
-                <div class="col-4">
-                    <label for="confirm_password">Huella:</label>
-                    <a class="waves-effect waves-light text-dark btn p-2 text-center" href="#" style="border-radius: 30px;" id="huella-option" disabled="true">
-                        <i class="material-icons small rounded-circle " style="font-size:100px;">fingerprint</i>
-                    </a>
-                </div>
-                
-                <div class="col-4">
-                    <label for="confirm_password">Voz:</label>
-                    <a class="waves-effect waves-light text-dark btn p-2 text-center" href="{% url 'sistemabio:voz' %}" style="border-radius: 30px;" id="voz-option" disabled="true">
-                        <i class="material-icons small rounded-circle " style="font-size:100px;">mic</i>
-                    </a>
-                </div>
-                  <!-- {% if sesion.id_tipo_sesion == 1 %}
+                  {% if id_tipo_sesion == 1 %}
                     <div class="col-4">
                     <label for="confirm_password"> Foto:</label>
                     <a class="waves-effect waves-light text-dark btn p-2 text-center" href="{% url 'sistemabio:facial' %}"
@@ -106,32 +86,16 @@
                     </div>
                   {% elif sesion.id_tipo_sesion == 2 %}
                     <div class="col-4">
-                      <label for="confirm_password">Voz:</label>
-                      <a class="waves-effect waves-light text-dark btn p-2 text-center" 
+                  <label for="confirm_password">Voz:</label>
+                  <a class="waves-effect waves-light text-dark btn p-2 text-center" 
                       href="{% url 'sistemabio:voz' %}" style="border-radius: 30px;"
-                      >
-                      <i class="material-icons small rounded-circle " style="font-size:100px;">mic
-                      </i>
-                    </a>
-                  </div>
-                  {% endif %}     -->
+                    >
+                    <i class="material-icons small rounded-circle " style="font-size:100px;">mic
+                    </i>
+                  </a>
+                    </div>
+                  {% endif %}    
                 </div>
-                  <script>
-                    document.getElementById("id_tipo_sesion").addEventListener("change", function () {
-                      var opcionSeleccionada = this.value;
-                      var facialOption = document.getElementById("facial-option");
-                      var huellaOption = document.getElementById("huella-option");
-                      var vozOption = document.getElementById("voz-option");
-  
-                      if (opcionSeleccionada === "facial") {
-                        facialOption.removeAttribute("disabled");
-                      } else if (opcionSeleccionada === "huella") {
-                        huellaOption.removeAttribute("disabled");
-                      } else if (opcionSeleccionada === "voz") {
-                        vozOption.removeAttribute("disabled");
-                      }
-                    });
-                  </script>
                 <div class="row text-center">
                   <div class="col lg6 center">
                     ¿Deseas completar los datos biometricos restantes?

@@ -150,10 +150,52 @@ def new_inquilino(request):
      
 @login_required
 def new_biometricos(request):
+     if request.method == "POST":
+        form = SesionForm(request.POST)
+        if form.is_valid():
+            opcion = form.cleaned_data['opcion']
+            if opcion == 'foto':
+                return redirect('sistemabio:facial')
+            elif opcion == 'huella':
+                # Puedes redirigir a otra página o mostrar un mensaje según la opción 'huella'
+                return redirect('otra_pagina')
+            elif opcion == 'voz':
+                return redirect('/sistemabio/voz')
+            new_biometricos = form.save(commit=False)
+            new_biometricos.save()
+            messages.success(request," El registro biométrico ha sido un éxito.")
+            return redirect('/sistemabio/new_biometricos/')
+        else:
+            messages.error(request, "Error al procesar el formulario.")
+     else:
+        form = SesionForm()
+
+     return render(request, 'sistemabio/inquilinos/new-biometricos.html', {"form": form,"error": "Error registrando el biométrico."})
+     # if request.method == "GET":
+     #    form= SesionForm
+     #    return render(request, 'sistemabio/inquilinos/new-biometricos.html', 
+     #                  {"form": SesionForm 
+     #                   })   
+     # else:
+     #    try:
+     #        form = SesionForm(request.POST)
+     #        new_biometricos = form.save(commit=False)
+     #        new_biometricos.save()
+     #        messages.success(request," El registro biométrico ha sido un éxito.")
+     #        return redirect('/sistemabio/new_biometricos/')
+     #    except ValueError:
+     #        messages.error(request, "Error no se registro el biométrico.")
+     #        return render(request, 'sistemabio/inquilinos/new-biometricos.html', 
+     #                      {"form":  SesionForm,
+     #                       "error": "Error registrando el biométrico."})
+
+@login_required
+def new_biometrico(request, usuario_id):
      if request.method == "GET":
-        form= SesionForm
-        return render(request, 'sistemabio/inquilinos/new-biometricos.html', 
-                      {"form": SesionForm 
+        inquilino = get_object_or_404(Usuario,pk=usuario_id)
+        form= SesionForm(instance=inquilino)
+        return render(request, 'sistemabio/inquilinos/new-biometrico.html', 
+                      {"form": SesionForm, 'inquilino':inquilino,
                        })   
      else:
         # print(request.POST)
@@ -163,10 +205,10 @@ def new_biometricos(request):
             new_biometricos = form.save(commit=False)
             new_biometricos.save()
             messages.success(request," El registro biométrico ha sido un éxito.")
-            return redirect('/sistemabio/new_biometricos/')
+            return redirect('/sistemabio/new_biometrico/')
         except ValueError:
             messages.error(request, "Error no se registro el biométrico.")
-            return render(request, 'sistemabio/inquilinos/new-biometricos.html', 
+            return render(request, 'sistemabio/inquilinos/new-biometrico.html', 
                           {"form":  SesionForm,
                            "error": "Error registrando el biométrico."})
         

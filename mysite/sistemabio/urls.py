@@ -19,6 +19,8 @@ urlpatterns = [
     path("inquilinos/",views.inquilinos, name="inquilinos"),
     path("new_biometricos/", views.new_biometricos, name="new_biometricos"),
     path("new_inquilino/",views.new_inquilino, name="new_inquilino"),
+    path("new_biometrico/<int:usuario_id>/", views.new_biometrico, name="new_biometrico"),
+
     path("search_inquilino/",views.search_inquilino, name="search_inquilino"),
     # path("search_inquilino/<int:inquilino_para>",views.search_inquilino, name="search_inquilino"),
     path("detail_inquilino/<int:usuario_id>/",views.detail_inquilino, name ="detail_inquilino"),

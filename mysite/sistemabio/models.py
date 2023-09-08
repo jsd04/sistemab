@@ -46,7 +46,8 @@ class Usuario(models.Model):
     id_status = models.CharField(max_length=2, choices=CATALOGO_STATUS, default='3')
 
     def __str__(self):
-        return self.nombre
+        # return "{} {} {}". format(self.nombre, self.ap_paterno, self.ap_materno)
+        return f'Id {self.id_usuario} -> {self.nombre} {self.ap_paterno} {self.ap_materno}'
 
 
 class Sesion(models.Model):
@@ -82,8 +83,8 @@ class Sesion(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
       
-    # def __str__(self):
-    #     return self.id_tipo_sesion
+    def __str__(self):
+         return f'{self.id_tipo_sesion}'
 
 
 
