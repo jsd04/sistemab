@@ -55,8 +55,6 @@ class Sesion(models.Model):
     # Relacion 1 a muchos, 
     # donde 1 usuario puede tener muchas sesiones 
     # Una sesion solo le pertenece a un usuario
-
-
     # Una sesion forzosamente deb permanecer a un usuario
     # por lo que no debe ser valor nulo null=False
     # ni almacenar valores vacios blank=False
@@ -68,7 +66,6 @@ class Sesion(models.Model):
         ('1', 'FACIAL'),
         ('2', 'VOZ'),
         ('3', 'HUELLA'),
-        ('4', 'NORMAL'),
     ]
     id_tipo_sesion = models.CharField(max_length=2, choices=CATALOGO_TIPO_SESION)
 

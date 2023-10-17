@@ -142,11 +142,12 @@
             </div>
             <div class="mb-3">
               <label for="fecha_nac">Fecha de Nacimiento:</label>
+              <!--acepta fechas aaaa-mm-dd y dd/mm/aaaa pero no aaaa/mm/dd ni dd-mm-aaaa -->
+              <!-- type="date" -->
               <input
-                type="date"
                 name="fecha_nac"
                 class="form-control"
-                placeholder="MM-DD-YYYY"
+                placeholder="DD/MM/AAAA"
               autofocus
               />
             </div>

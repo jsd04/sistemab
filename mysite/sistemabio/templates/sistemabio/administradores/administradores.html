@@ -51,6 +51,10 @@
   <div class="container p-5">
       <h3 style="font-family: 'Franklin Gothic Medium'">Administradores registrados</h3>
       <div class="row" style=" border: 0.5px solid rgb(80, 17, 170); margin: 25px 0px; background:rgb(185, 148, 243)"> 
+        {% for user in users %}
+        <h3 style="font-family: 'Franklin Gothic Medium'">{{user.username}}</h3>
+        {% endfor %}
+        <h3 style="font-family: 'Franklin Gothic Medium'">{{user.username}}</h3>
       </div>
   </div>
 

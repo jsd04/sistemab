@@ -53,12 +53,12 @@
       </h3>
     </div>
     <div class="card-body text-left bg-success "style="--bs-bg-opacity: .3;">
-      <form action="/sistemabio/new_biometricos/" method="POST" enctype="multipart/form-data" >
+      <form  method="POST" enctype="multipart/form-data" >
         {% csrf_token %} 
+       
       <div class="container">
           <div class="row ">
               <div class="col">
-                  
                   <p class="text-black" style="font-family: 'Franklin Gothic Medium'; font-size: 20px;" > 
                     <b>Aquí se realiza la captura de rostro</b>
                   </p>
@@ -72,17 +72,28 @@
                       <div id="my_camera"></div>
                       <br>
                       <div class="d-flex justify-content-center">
-                       <!-- -->
                        <button type="button" class="btn btn-primary" onclick="takeSnapshotAndSend()">Capturar</button> 
                       </div>
                       <br>
-                      <!-- 
-                      <input type=button value="Take Snapshot" onClick="take_snapshot()">  
-                      -->
                       <div id="results" ></div>
-                        <br>
-                        <input type="text"  id="dato" name ="dato" /> 
-                         <!-- document.getElementById("results").value-->
+                      <br>
+
+                      <label for="id_usuario">Usuario:</label>
+                      <select class="form-control" type="text" id="id_usuario" name="id_usuario" >
+                        <option value="{{inquilino.id_usuario}}" selected="selected">Id {{inquilino.id_usuario}} -> {{inquilino.id_usuario}} {{inquilino.nombre}} {{inquilino.ap_paterno}} {{inquilino.ap_materno}}</option>
+                      </select readonly>
+                      
+                      <label for="id_tipo_sesion">Tipo de sesion:</label>
+                      <select class="form-control" type="text" id="id_tipo_sesion" name="id_tipo_sesion" >
+                        <option value="1" selected="selected">Tipo sesion {{sesion.id_tipo_sesion}} ->FACIAL</option>
+                      </select readonly>
+
+                      <label for="id_dato">Dato:</label>
+                      <input type="text" name="dato" class="form-control" id="id_dato"/> 
+                      
+                      <h5></h5>
+                      <!-- {{form}} -->
+                        
                      <script language="JavaScript">
                        Webcam.set({
                             width: 320, 
@@ -90,62 +101,52 @@
                             image_format: 'jpeg',
                             jpeg_quality: 90
                         });
-
+                        
                         Webcam.attach('#my_camera');
-                        path="C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/sistemabio/fotos/"
                         var numPhotos = 10; // Número total de fotos que se van a capturar
                         var photoCounter = 0; // Contador de fotos capturadas
+                        const data_uri2 = [];
                         function takeSnapshotAndSend() {
-                         for (var i = 0; i <numPhotos; i++) {
+                          for (var i = 0; i <numPhotos; i++) {
                             // Tomar la instantánea y obtener los datos de la imagen
                             Webcam.snap(function(data_uri) {
-                               // display results in page
-                            document.getElementById('results').innerHTML = 
-                           // '<img src="'+data_uri+'"/>';
-                            '<img id="imageprev" src="'+data_uri+'"/>';
-                            var valor = document.getElementById("results").innerHTML;
-                            console.log("valor",valor);
-                             document.getElementById("dato").value = valor ;
-                            console.log("valor2",valor);
-                           
-                              var valor =data_uri
-                              // Generar un nombre de archivo único para la imagen
-                              var fileName = 'imagen_' + photoCounter + '.png';
-
-                              // Guardar la imagen localmente con el nombre de archivo generado
-                              var saveUrl = path + fileName; // Ruta y nombre de archivo para guardar la imagen
+                              // display results in page
+                              document.getElementById('results').innerHTML = 
+                              // '<img id="imageprev" src="'+data_uri+'"/>';
+                              '<img id="imageprev" src="'+data_uri+'"/>';
+                              var valor = document.getElementById("results").innerHTML;
+                              
+                              console.log("valor",valor);
+                              // document.getElementById("id_dato").value = valor ;
+                              // console.log("valor2",valor);
+                              document.getElementById("id_dato").value = data_uri ;
+                              console.log("dta uri",data_uri);
+                              data_uri2.push(' ' + data_uri);
+                              console.log("dta uri2",data_uri2);
+                              document.getElementById("id_dato").value = data_uri2 ;
                               // Incrementar el contador de fotos capturadas
                               photoCounter++;
                               console.log("Foto tomada ", photoCounter)
-                              
-                          }); 
-                      }
-                      console.log("Total de Fotos tomadas ", photoCounter)
-                     }
-                    </script>
+                            });
+                          }
+                          console.log("Total de Fotos tomadas ", photoCounter) 
+                          print('array',data_uri2)
+                        }
+                      </script>
                     </div>                   
                   </div>          
-                    <br>
-                    <br>                  
+                  <br>
+                  <br>                  
               </div>
           </div>
-          <div class="row justify-content-end">
-          <div class="col-4 align-self-end">
-           
-            <input id = "team_name" type="text" name ="name_field" value="Ejemplo3" />
-
+       
             <button class="btn btn-info w-100" type="submit">
               Guardar 
               <i class="material-icons "> save</i>
             </button>
-            <!-- <a class="waves-effect waves-light text-white btn p-2 text-center  " style="background: rgb(29, 240, 134);border-radius: 20px;"
-                      href="javascript:window.history.back(); "
-                  > Aceptar
-                 <i class="material-icons small rounded-circle " style="font-size:20px;">face
-                 </i>                   
-            </a>-->
-          </div>
-      </div>
+    
+         
+      
       </div>
       </form>
     </div>
