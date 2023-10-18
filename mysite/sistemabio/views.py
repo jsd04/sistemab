@@ -143,7 +143,7 @@ def new_inquilino(request):
           #   print('usuario id facial ', inquilino.id_usuario)
             personName = str(inquilino.id_usuario) + inquilino.nombre + inquilino.ap_paterno + inquilino.ap_materno
             print("Nombre de personName es: ", personName)
-            dataPath = 'C:/Users/yobis/Desktop/sistemabiors/SistemaBiometricoJessi/mysite/sistemabio/static/inquilinos'
+            dataPath = 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/inquilinos'
             personPath = dataPath + '/' + personName
             print("Nombre de carpeta es: ", personPath)
             try:
@@ -346,7 +346,7 @@ def facial(request, usuario_id):
                # print('sesion dato', sesion.dato)
                personName =  str(usuario_id) + inquilino.nombre + inquilino.ap_paterno + inquilino.ap_materno 
                print("Nombre de personName es: ", personName)
-               dataPath = 'C:/Users/yobis/Desktop/sistemabiors/SistemaBiometricoJessi/mysite/sistemabio/static/inquilinos' + '/' + personName 
+               dataPath = 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/inquilinos' + '/' + personName
                personPath = dataPath + '/' + 'FACIAL' + personName
                print("Nombre de carpeta es: ", personPath)
                if not os.path.exists(personPath):
