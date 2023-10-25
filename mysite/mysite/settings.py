@@ -88,19 +88,39 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'PruebaDjango',
+#         'ENFORCE_SCHEMA': False,
+#         'CLIENT': {
+#             'host': 'mongodb+srv://jessicasd:JESSICAsd@cluster0.jqyov.mongodb.net/PruebaDjango'
+#         },
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         # 'ENGINE': 'django.db.backends.sqlite3',
+#         # 'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'sistemadbjlap2',
+#         'USER': 'postgres',
+#         'PASSWORD': 'jessicasd04',
+#         'HOST': 'localhost',
+#         'PORT':'5432',
+#     }
+# }
+# database-1.chrirhorapgm.us-east-2.rds.amazonaws.com
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sistemadb',
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'jessicasd04',
-        'HOST': 'localhost',
+        'HOST': 'database-1.chrirhorapgm.us-east-2.rds.amazonaws.com',
         'PORT':'5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

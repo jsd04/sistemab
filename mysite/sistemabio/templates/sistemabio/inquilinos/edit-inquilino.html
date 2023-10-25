@@ -3,21 +3,15 @@
 {% block content %}
 
 
+
 <header class="row" style="position: relative; height: 50vh; width: 100%;">
   <div class="col s12 m11 l9 xl8 " style="position: absolute; top: 0px; height: 110%; left: 0px;">
     <img alt="imagen1" src="{% static 'sistemabio/img/ba11.png' %}" class="responsive-image"
       style="height: 120%; width: 80%; left: -10px; top: 0px; position: absolute; object-fit: cover;" />
   </div>
   <div class="col s12 m9 l9 xl8 white-text"
-    style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;">
-    <div class="col s4 hide-on-small-only" 
-            
-    style="position: absolute; top: 70%; left: 80%; height: 100%; transform: translate(-50%, -50%); width: 30%;" 
->
-   <h1 class="titulo" style="font-size:40px">
-     LISTADO DE <b>INQUILINOS</b>
-   </h1>
-    <h1 class="titulo">
+    style="position: absolute; top: 70%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;">
+    <h1 class="titulo" style="font-size:40px">
       EDICION DE <b>INQUILINOS</b>
     </h1>
     <br>
@@ -29,6 +23,22 @@
       </h3>
     </blockquote>
   </div>
+
+        <!-- <div class="col s4 hide-on-small-only" 
+            
+             style="position: absolute; top: 70%; left: 80%; height: 100%; transform: translate(-50%, -50%); width: 30%;" 
+        >
+            <h1 class="titulo" style="font-size:40px">
+              LISTADO DE <b>INQUILINOS</b>
+            </h1>
+            <blockquote>
+              <h4 class="subtitulo black-text" style="font-size:20px">
+                <b>
+                  Aquí puedes consultar los registros <br /> de los Inquilinos
+                </b>
+              </h4>
+            </blockquote>
+        </div> -->
 
   <div class="col m6 l6 xl5 hide-on-small-only" style="height: 100%; position: absolute; top: 0%; right: 0%;">
     <img alt="" src="{% static 'sistemabio/img/parteba8_2.png' %}" class="responsive-img"
@@ -62,11 +72,11 @@
           {% csrf_token %}             
              <form action="/sistemabio/new_inquilino/" method="POST" enctype="multipart/form-data">
        -->
-
-          <form actio="/sistemabio/edit_inquilino/" method="POST">
+<!-- actio="/sistemabio/edit_inquilino/" -->
+          <form  method="POST">
             {% csrf_token %}            
             <!-- <input type="hidden" name="_method" value="PUT" /> -->
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <label for="nombre">Nombre:</label>
               <input
                 type="text"
@@ -138,41 +148,47 @@
                 class="form-control"
                 value="{{inquilino.correo}}"
               />
-            </div>
-            <div class="mb-3">
-              <label for="fecha_nac">Fecha de Nacimiento:</label>
-              <input
-                type="date"
+            </div> -->
+            <!-- <div class="mb-3">
+              <label for="fecha_nac">Fecha de Nacimiento:</label> -->
+              <!-- type="date" -->
+              <!-- <input
                 name="fecha_nac"
                 class="form-control"
                 value="{{inquilino.fecha_nac}}"
               />
-            </div>
-            <div class="mb-3">
+            </div> -->
+            <!-- <div class="mb-3">
               <label for="id_perfil">Perfil de Usuario:</label>
               <br>
               <input
               value="{{inquilino.id_perfil}}"/>
-                <select name="id_perfil" required>
-                  <option value="1">Administrador</option>
-                  <option value="2">Usuario Inquilino </option>
-                  <option value="3">Usuario Visitante </option>
-                  <option value="4">Usuario Trabajador </option>
-                  value="{{inquilino.id_perfil}}"
-                </select>
-            </div>
-            <div class="mb-3">
+                <select name="id_perfil" class="form-control">
+                  <option value="{{inquilino.id_perfil}}" selected="selected">{{inquilino.id_perfil}}</option>
+                </select> -->
+                 <!-- <label for="id_usuario">Usuario:</label>
+                      <select class="form-control" type="text" id="id_usuario" name="id_usuario" >
+                        <option value="{{inquilino.id_usuario}}" selected="selected">Id {{inquilino.id_usuario}} -> {{inquilino.id_usuario}} {{inquilino.nombre}} {{inquilino.ap_paterno}} {{inquilino.ap_materno}}</option>
+                      </select readonly>
+                      
+                      <label for="id_tipo_sesion">Tipo de sesion:</label>
+                      <select class="form-control" type="text" id="id_tipo_sesion" name="id_tipo_sesion" >
+                        <option value="1" selected="selected">FACIAL</option>
+                      </select readonly>-->
+            <!-- </div> -->
+            <!-- <div class="mb-3">
               <label for="id_status">Status:</label>
               <br>
-                <select name="id_status" required>
-                  <option value="1">ALTA</option>
-                  <option value="2"> BAJA </option>
-                  <option value="3"> PENDIENTE </option>
-                  <option value="4"> COMPLETO </option>
-                </select>
-            </div>
-            
-            <h4 class="text-dark">Datos Biométricos</h4>
+              <select name="id_status" required>
+                <option value="1">ALTA</option>
+                <option value="2"> BAJA </option>
+                <option value="3"> PENDIENTE </option>
+                <option value="4"> COMPLETO </option>
+              </select>
+            </div> -->
+            <br>
+            {{form}}
+            <br>
             
             
             <button class="btn btn-info w-100" type="submit">

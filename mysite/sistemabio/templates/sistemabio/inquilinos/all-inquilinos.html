@@ -74,9 +74,9 @@
       </div>
     </div>        
 
-  <div class="row" style=" border: 0.5px solid rgb(232, 142, 7); margin: 25px 0px; background:rgb(254, 218, 151)">
-    
-<!---->
+ <div class="row" style=" border: 0.5px solid rgb(232, 142, 7); margin: 25px 0px; background:rgb(254, 218, 151)">
+   
+
 {% for inquilino in inquilinos %}
   <div class="col-md-3">
     <br>
@@ -84,8 +84,10 @@
         <div class="card-body ">
           <div class="d-flex p-1 flex-row-reverse">
             <a  href="{% url 'sistemabio:detail_inquilino' inquilino.id_usuario %}">
+              
+             
+           
               <i class='fas fa-info-circle' style='font-size:30px'></i>
-              <!-- <span class="material-symbols-rounded">info</span> -->
             </a> 
           </div>
            Usuario:
@@ -96,12 +98,31 @@
           <p>Curp: {{ inquilino.curp }} </p>
           <p>No. Piso: {{ inquilino.piso }} </p>
           <p>No. Departamento: {{ inquilino.departamento }} </p>
+          <p>No. Teléfono: {{ inquilino.telefono }} </p>
+          <p>Correo: {{ inquilino.correo }} </p>
+          <p>Fecha de nacimiento: {{inquilino.fecha_nac }}</p>
+          <p>Estado: {{inquilino.id_status}}</p>
+          <p>Fecha de creación: {{ inquilino.fecha_creado }}</p>
+          <p>Fecha de actualización: {{ inquilino.fecha_actualizado }}</p>
+          
+           {% for sesion in sesiones %} 
+           {% if sesion.id_usuario_id == inquilino.id_usuario %}
+           <h1>Datos Biométricos</h1>
+              <p>Id sesion: {{ sesion.id_sesion }}</p>
+              <p>id_usuario: {{sesion.id_usuario}}</p>
+              <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+              <p>dato :{{sesion.dato }}</p>
+              <p> fecha_creacion de usuario: {{sesion.fecha_creacion}} </p>
+              <p> fecha_actualizacion de usuario: {{sesion.fecha_actualizacion}}</p>
+             {% endif %} 
+            
+           {% endfor %} 
         </div>
       </div>
     <br>
   </div>
 {% endfor %}
-  
+ 
 </div>
 </div>
 <div class="container-xl">
@@ -113,8 +134,8 @@
                       <th style="border-spacing: 1px;" >Nombre</th>
                       <th border-left-width: 1px; >Tipo de usuario </th>
                       <th>No. Piso </th>
-                      <th>No. Departamento</th>
-                      <th>Fecha de creación</th>
+                      <th>No. Dep</th>
+                      <th>Datos biometricos</th>
                       <th>Actions _____  </th>
                   </tr>
               </thead>
@@ -125,7 +146,36 @@
                       <td>{{ inquilino.id_perfil }} </td>
                       <td>{{ inquilino.piso }}</td>
                       <td>{{ inquilino.departamento }}</td>
-                      <td>{{ inquilino.creado }}</td>
+        
+                      <td>
+                      {% for sesion in sesiones %}
+                        {% if sesion.id_usuario_id == inquilino.id_usuario %}
+                        
+                          Tipo sesion: {{ sesion.id_tipo_sesion }} 
+                          <input name="completado" type="checkbox" value="completado" /> 
+                          <p> completado : {{sesion.completado}}</p>
+                          {% if sesion.id_tipo_sesion == '1' %} 
+                            {% if sesion.completado == True %}
+                            <input name="completado" type=checkbox checked onclick="return false;"/>
+                            {% else %}  
+                            <input name="completado" type=checkbox  onclick="return false;"/>
+                            {% endif %}
+                          {% endif %}
+                          <!-- {% if sesion.id_tipo_sesion == '2' and sesion.completado == True %}
+                          <input name="completado" type=checkbox checked onclick="return false;"/>
+                          {% else %}  
+                          <input name="completado" type=checkbox  onclick="return false;"/>
+                          {% endif %}
+                          {% if sesion.id_tipo_sesion == '3' and sesion.completado == True %}
+                          <input name="completado" type=checkbox checked onclick="return false;"/>
+                          {% else %}  
+                          <input name="completado" type=checkbox  onclick="return false;"/>
+                          {% endif %} -->
+                          <br> 
+                        
+                        {% endif %}
+                        
+                      {% endfor %}
                       <td>
                           <a href="{% url 'sistemabio:detail_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
                             <i class="fas fa-eye" style='font-size:24px;color:rgb(61, 149, 249)'></i>
@@ -133,7 +183,7 @@
                           <a href="{% url 'sistemabio:edit_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
                             <i class='fas fa-pencil-alt' style='font-size:24px;color:rgb(251, 227, 48)'></i>
                           </a>
-                          <a href="#" style="text-decoration:none">
+                          <a href="{% url 'sistemabio:delete_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
                             <i class='fas fa-trash-alt' style='font-size:24px;color:red'></i>
                           </a>
                       </td>
@@ -143,10 +193,11 @@
               </tbody>
           </table>
           <div class="clearfix">
-              <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-              <ul class="pagination">
-                  <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                  <li class="page-item"><a href="#" class="page-link">1</a></li>
+              <p>Total de registros: {{count}}  pagina numero: {{page.number}}</p>
+              <div class="hint-text">Mostrando<b>5</b> out of <b>{{inquilinos |length }}</b> registros</div>
+              <ul class="pagination justify-content-end " >
+                  <li class="page-item "><a href="#"class="page-link bg-info"><i class="fa fa-angle-double-left"></i></a></li>
+                  <li class="page-item disabled"><a href="#" class="page-link">1</a></li>
                   <li class="page-item"><a href="#" class="page-link">2</a></li>
                   <li class="page-item active"><a href="#" class="page-link">3</a></li>
                   <li class="page-item"><a href="#" class="page-link">4</a></li>
@@ -154,6 +205,7 @@
                   <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
               </ul>
           </div>
+          
       </div>
   </div>  
 </div>

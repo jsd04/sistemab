@@ -1,4 +1,5 @@
 
+
 {% extends "sistemabio/base.html" %}
 {% load static %}
 {% block content %}
@@ -48,7 +49,7 @@
           </a>
         </div>
       </div>
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-6 mx-auto">
       <div class="card">
         <div class="card-header bg-success  text-center" style="--bs-bg-opacity: .7;">
           <h3 class="text-white">Nuevo inquilino</h3>
@@ -56,6 +57,9 @@
         <div class="card-body text-left bg-success  p-2" style="--bs-bg-opacity: .3;">
           <form action="/sistemabio/new_inquilino/" method="POST" enctype="multipart/form-data">
             {% csrf_token %} 
+            <!-- <div class="mb-3">
+              <br>{{form.as_p}}     
+            </div> -->
             <div class="mb-3">
               <label for="nombre">Nombre:</label>
               <input
@@ -138,18 +142,19 @@
             </div>
             <div class="mb-3">
               <label for="fecha_nac">Fecha de Nacimiento:</label>
+              <!--acepta fechas aaaa-mm-dd y dd/mm/aaaa pero no aaaa/mm/dd ni dd-mm-aaaa -->
+              <!-- type="date" -->
               <input
-                type="date"
                 name="fecha_nac"
                 class="form-control"
-                placeholder="MM-DD-YYYY"
+                placeholder="DD/MM/AAAA"
               autofocus
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-3" >
               <label for="id_perfil">Perfil de Usuario:</label>
               <br>
-                <select name="id_perfil" required>
+                <select class="form-control" name="id_perfil" required >
                   <option value="1">Administrador</option>
                   <option value="2">Usuario Inquilino </option>
                   <option value="3">Usuario Visitante </option>
@@ -159,125 +164,15 @@
             <div class="mb-3">
               <label for="id_status">Status:</label>
               <br>
-                <select name="id_status" required>
+                <select class="form-control" name="id_status" required>
                   <option value="1">ALTA</option>
                   <option value="2"> BAJA </option>
                   <option value="3"> PENDIENTE </option>
                   <option value="4"> COMPLETO </option>
+                
                 </select>
             </div>
-            
-            <h4 class="text-dark">Datos Biométricos</h4>
-            <div class="row text-center">
-             <div class="col">
-              <label for="confirm_password"> Foto:</label>
-              <a class="waves-effect waves-light text-dark btn p-2 text-center"  href="/sistemabio/facial"
-                    style="border-radius: 30px;" 
-                  >
-                  <i class="material-icons small rounded-circle " style="font-size:90px;"> 📷 
-                  </i> 
-                </a> 
-                <div class="col">
-                  
-                  <p class="text-black" style="font-family: 'Franklin Gothic Medium'; font-size: 20px;" > 
-                    <b>Aquí se realiza la captura de rostro</b>
-                  </p>
-                  <br>
-                  <p>
-                    Al oprimir el boton de "Take Foto" se tomará una imagen de tu rostro, posterior a eso tendrás que oprimir el botón de aceptar para continuar con el registro.
-                  </p>
-                  <div class="row justify-content-md-center">
-                    <div class="col-6 aling-self-center">
-                      <br>
-                      <div id="my_camera"></div>
-                      <br>
-                      <div class="d-flex justify-content-center">
-                       <button type="button" class="btn btn-primary" onclick="takeSnapshotAndSend()">Capturar</button> 
-                      </div>
-                      <br>
-                      
-                      <div id="results" ></div>
-                        <br>
-                        <input type="text"  id="cara" name ="cara" />
-                     <script language="JavaScript">
-                       Webcam.set({
-                            width: 320, 
-                            height: 240,
-                            image_format: 'jpeg',
-                            jpeg_quality: 90
-                        });
-
-                        Webcam.attach('#my_camera');
-                        path="C:/Users/yobis/Desktop/Proyectos/pt/SistemaBiometricoPT/Interfaz/Administrador/src/public/fotos/"
-                        var numPhotos = 10; // Número total de fotos que se van a capturar
-                        var photoCounter = 0; // Contador de fotos capturadas
-                        function takeSnapshotAndSend() {
-                         // for (var i = 0; i <numPhotos; i++) {
-                            // Tomar la instantánea y obtener los datos de la imagen
-                            Webcam.snap(function(data_uri) {
-                               // display results in page
-                            document.getElementById('results').innerHTML = 
-                           // '<img src="'+data_uri+'"/>';
-                            '<img id="imageprev" src="'+data_uri+'"/>';
-                            var valor = document.getElementById("results").innerHTML;
-                            console.log("valor",valor);
-                             document.getElementById("cara").value = valor ;
-                            console.log("valor2",valor);
-                           
-                              //var valor =data_uri
-                              // Generar un nombre de archivo único para la imagen
-                              var fileName = 'imagen_' + photoCounter + '.png';
-
-                              // Guardar la imagen localmente con el nombre de archivo generado
-                              // var saveUrl = path + fileName; // Ruta y nombre de archivo para guardar la imagen
-                              // Incrementar el contador de fotos capturadas
-                              photoCounter++;
-                              console.log("Foto tomada ", photoCounter)
-                             // savAs(data_uri)
-                          }); 
-                      //}
-                      console.log("Total de Fotos tomadas ", photoCounter)
-                     }
-                    </script>
-                    </div>                   
-                  </div>          
-                    <br>
-                    <br>                  
-              </div>
-             </div>
-            </div> 
-            <h4 class="text-dark">Datos Biométricos</h4>
-            <div class="row text-center">
-             <div class="col-4">
-              <label for="confirm_password"> Foto:</label>
-              <a class="waves-effect waves-light text-dark btn p-2 text-center"  href="/facial"
-                    style="border-radius: 30px;" 
-                  >
-                  <i class="material-icons small rounded-circle " style="font-size:90px;"> 📷 
-                  </i> 
-                </a> 
-             </div>
-              <div class="col-4">
-                <label for="confirm_password">Huella:</label>
-                <a class="waves-effect waves-light text-dark btn p-2 text-center" 
-                    href="#" style="border-radius: 30px;"
-                  >
-                  <i class="material-icons small rounded-circle " style="font-size:100px;">fingerprint
-                  </i>
-                </a>
-              </div>
-              <div class="col-4">
-                <label for="confirm_password">Voz:</label>
-                <a class="waves-effect waves-light text-dark btn p-2 text-center" 
-                    href="#" style="border-radius: 30px;"
-                  >
-                  <i class="material-icons small rounded-circle " style="font-size:100px;">mic
-                  </i>
-                </a>
-              </div>              
-            
-                
-            </div>
+          
             <button class="btn btn-info w-100" type="submit">
               Guardar 
               <i class="material-icons "> save</i>
@@ -286,6 +181,8 @@
         </div>
       </div>
     </div>
-
+  <br>
+  <br>
+    
 {% endblock %}
  

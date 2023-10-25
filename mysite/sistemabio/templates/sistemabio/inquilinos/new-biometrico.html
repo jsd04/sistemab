@@ -1,0 +1,134 @@
+
+{% extends "sistemabio/base.html" %}
+{% load static %}
+{% block content %}
+    <header class="row" style="position: relative; height: 50vh; width: 100%;">
+        <div
+          class="col s12 m11 l9 xl8 "
+          style="position: absolute; top: 0px; height: 110%; left: 0px;"
+        >
+          <img
+            alt="imagen1"
+            src="{% static 'sistemabio/img/ba8.png' %}"
+            class="responsive-image" 
+            style="height: 90%; width: 80%; left: 0px; top: 0px; position: absolute; object-fit: cover;"
+          />
+        </div>
+        <div class="col s12 m9 l9 xl8 white-text" 
+             style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;"
+        >
+        <br>
+        <br>
+            <blockquote>
+                <br>
+                <br>
+              <h2 class="subtitulo black-text " >
+                <b>
+                  Aquí puedes añadir los datos <br /> biométricos
+                </b>
+              </h2>
+            </blockquote>
+        </div>
+        
+        <div class="col m6 l6 xl5 hide-on-small-only" style="height: 100%; position: absolute; top: 0%; right: 0%;">
+          <img alt="" src="{% static 'sistemabio/img/parteba11_13.png' %}" 
+          class="responsive-img" style="position: absolute; right: -5px; top: 0px; height: 100%; width: 50%;">
+        </div>  
+    </header>
+      <br />
+      <br />
+      <br />
+      <div class="row justify-content-end">
+        <div class="col-3 align-self-end">
+          <a class="waves-effect waves-light text-white btn p-2 text-center  " style="background: rgb(29, 240, 134);border-radius: 20px;"
+                    href="javascript:window.history.back(); " style=""
+                > 
+            <i class="material-icons  text-white large rounded-circle btn p-2 text-center">arrow_back
+            </i>       Regresar              
+          </a>
+        </div>
+      </div>
+      <br >
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header bg-success  text-center" style="--bs-bg-opacity: .7;">
+            <h3 class="text-white">Datos Biométricos</h3>
+          </div>
+          <div class="card-body text-left bg-success  p-2" style="--bs-bg-opacity: .3;">
+            <form action="/sistemabio/new_biometricos/" method="POST" enctype="multipart/form-data">
+              {% csrf_token %} 
+                <p class="text-dark" style="font-size: 20px;">
+                    Agrega por lo menos un dato biométrico
+                </p>
+                <div class="mb-3">
+                  <br>{{form.as_p}}     
+                </div>
+                <div class="row text-center">
+                  {% if id_tipo_sesion == 1 %}
+                    <div class="col-4">
+                    <label for="confirm_password"> Foto:</label>
+                    <a class="waves-effect waves-light text-dark btn p-2 text-center" href="{% url 'sistemabio:facial' %}"
+                      style="border-radius: 30px;">
+                    
+                      <i class="material-icons small rounded-circle " style="font-size:90px;"> 📷
+                      </i>
+                    </a>
+                    </div>
+                  {% elif sesion.id_tipo_sesion == 3 %}
+                    <div class="col-4">
+                   <label for="confirm_password">Huella:</label>
+                   <a class="waves-effect waves-light text-dark btn p-2 text-center" 
+                       href="#" style="border-radius: 30px;"
+                     >
+                     <i class="material-icons small rounded-circle " style="font-size:100px;">fingerprint
+                     </i>
+                   </a>
+                    </div>
+                  {% elif sesion.id_tipo_sesion == 2 %}
+                    <div class="col-4">
+                  <label for="confirm_password">Voz:</label>
+                  <a class="waves-effect waves-light text-dark btn p-2 text-center" 
+                      href="{% url 'sistemabio:voz' %}" style="border-radius: 30px;"
+                    >
+                    <i class="material-icons small rounded-circle " style="font-size:100px;">mic
+                    </i>
+                  </a>
+                    </div>
+                  {% endif %}    
+                </div>
+                <div class="row text-center">
+                  <div class="col lg6 center">
+                    ¿Deseas completar los datos biometricos restantes?
+                  </div> 
+                  <br>
+                  <br>
+                  <div class="row text-center">
+                    <div class="col s6 start">
+                        <a class=" btn btn-warning active" aria-current="page" href="/sistemabio/signin">
+                            Si
+                            <i class="material-icons right">send</i>
+                        </a>
+                    </div>
+                    <div class="col s6 center">
+                        <a class="btn btn-outline-info" href="/sistemabio/signup">
+                            Más tarde
+                            <i class="material-icons right">edit_note</i>
+                        </a>
+                    </div>
+                  </div>
+                </div> 
+                <br>
+            
+              <button class="btn btn-info w-100" type="submit">
+                Guardar 
+                <i class="material-icons "> save</i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+<br>
+<br>
+
+{% endblock %}
+ 

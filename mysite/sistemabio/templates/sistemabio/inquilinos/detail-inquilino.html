@@ -1,5 +1,6 @@
 {% extends "sistemabio/base.html" %}
 {% load static %}
+
 {% block content %}
 
     <header class="row" style="position: relative; height: 50vh; width: 100%;">
@@ -50,71 +51,192 @@
       
   <div class="container p-5">
         <h3 style="font-family: 'Franklin Gothic Medium'">Inquilinos registrados</h3>
-         <!--h1 class="bg-info">Hola {{Administrador.name}}</h1-->
-    <div class="row justify-content-end">
-      <div class="col-3 align-self-center">
-        <a class="btn btn-outline-info text-center" style=" background-image: var(--bs-gradient);border-radius: 20px;"
-           href="/sistemabio/new_inquilino" 
-        >
-          <p style="font-family: 'Franklin Gothic Medium'" >
-            Añadir inquilino <i class="material-icons rounded-circle ">person_add</i>
-          </p>
-        </a>
-      </div>
-    </div>        
+        <!--h1 class="bg-info">Hola {{Administrador.name}}</h1-->
+        <div class="row justify-content-end">
+          <div class="col-3 align-self-center">
+            <a class="btn btn-outline-info text-center" style=" background-image: var(--bs-gradient);border-radius: 20px;"
+              href="/sistemabio/new_inquilino">
+              <p style="font-family: 'Franklin Gothic Medium'">
+                Añadir inquilino <i class="material-icons rounded-circle ">person_add</i>
+              </p>
+            </a>
+          </div>
+        </div>
 
   <div class="row" style=" border: 0.5px solid rgb(1, 17, 135); margin: 25px 0px; background:rgb(144, 221, 227)">
-<!---->
+  <!---->
   <div class="col-md">
     <br>
     <!-- <div class="card" style=" border: 1.3px solid rgb(64, 113, 247);  "> "{% url 'sistemabio:edit_inquilino' inquilino.id_usuario %}" -->
       <div class="card-body box-profile ">
-        <div class="text-center">
-          <img class="profile-user-img img-fluid img-circle" src="{% static 'sistemabio/images/Jess.jpg' %}"  alt="User profile picture">
-        </div>
+        <!-- <div class="text-center">
+          <img class="profile-user-img img-fluid img-circle" src="{% static 'sistemabio/images/Jess.jpg' %}"
+            alt="User profile picture">
+        </div> -->
         <h3 class="d-flex p-2 flex-row-reverse">
-           <a href= "{% url 'sistemabio:edit_inquilino' inquilino.id_usuario %}">
-              <!-- "sistemabio:edit_inquilino/{{inquilino.id_usuario}}"<i class="fas fa-edit"></i> -->
-              <i class='fas fa-edit' style='font-size:36px'></i>
-            </a> 
-         </h3>
-         <h3 class="profile-username text-center"> {{ inquilino.nombre}} {{ inquilino.ap_paterno}} {{ inquilino.ap_materno}}</h3>
-         Usuario:
-         <h4 class="card-title ">
-           {{ inquilino.nombre}} {{ inquilino.ap_paterno}} {{ inquilino.ap_materno}}
-         </h4>
-         <br>
-         <p class="text-muted text-center">{{ inquilino.id_perfil }}</p>
-         <p>Tipo de usuario: {{ inquilino.id_perfil }}</p>
-         <p>Curp: {{ inquilino.curp }} </p>
-         <p>No. Piso: {{ inquilino.piso }} </p>
-         <p>No. Departamento: {{ inquilino.departamento }} </p>
-         <p>No. Teléfono: {{ inquilino.telefono }} </p>
-         <p>Correo: {{ inquilino.correo }} </p>
-         <h1>Datos Biométricos</h1>
-          <ul class="list-group list-group-unbordered mb-3">
-            <li class="list-group-item">
-            <b>Facial</b> <a class="float-right">1,322</a>
-            </li>
-            <li class="list-group-item">
-            <b>Huella</b> <a class="float-right">543</a>
-            </li>
-            <li class="list-group-item">
-            Voz <a class="text-right">13,287</a>
-            </li>
-            </ul>
+          <a href="{% url 'sistemabio:edit_inquilino' inquilino.id_usuario %}">
+            <i class='fas fa-edit' style='font-size:36px'></i>
+          </a>
+        </h3>
+    
+        <h3 class="profile-username text-center"> {{ inquilino.nombre}} {{ inquilino.ap_paterno}} {{ inquilino.ap_materno}}</h3>
+        <!-- Usuario:
+        <h4 class="card-title ">
+          {{ inquilino.nombre}} {{ inquilino.ap_paterno}} {{ inquilino.ap_materno}}
+        </h4> -->
+        <br>
+        <!-- <p class="text-muted text-center">{{ inquilino.id_perfil }}</p> -->
+        <p>ID de usuario: {{ inquilino.id_usuario }}</p>
+        <p>Tipo de usuario: {{ inquilino.id_perfil }}</p>
+        <p>Curp: {{ inquilino.curp }} </p>
+        <p>No. Piso: {{ inquilino.piso }} </p>
+        <p>No. Departamento: {{ inquilino.departamento }} </p>
+        <p>No. Teléfono: {{ inquilino.telefono }} </p>
+        <p>Correo: {{ inquilino.correo }} </p>
+        <p>Fecha de nacimiento: {{inquilino.fecha_nac }}</p>
+        <p>Status: {{inquilino.id_status}}</p>
+        <p>Fecha de creación: {{ inquilino.fecha_creado }}</p>
+        <p>Fecha de actualización: {{ inquilino.fecha_actualizado }}</p>
+        
+        {% for sesion in sesiones %} 
+        {% if sesion.id_usuario_id == inquilino.id_usuario %}
+        <h1>Datos Biométricos</h1>
+           <p>Id sesion: {{ sesion.id_sesion }}</p>
+           <p>id_usuario: {{sesion.id_usuario_id}}</p>
+           <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+           <p>dato : {{sesion.dato}} </p>
+           
+           <p>dato : 
+            <img src="{{python6423}}">
+           </p>
+           
+           <p> fecha_creacion de usuario: {{sesion.fecha_creacion}} </p>
+           <p> fecha_actualizacion de usuario: {{sesion.fecha_actualizacion}}</p>
+          {% endif %} 
+         
+        {% endfor %}
+        <p>hhh   </p>
+       
+        <a href="https://biometricsystem.hugedata.systems/datos/">
+          <i class='fas fa-edit' style='font-size:36px'></i>
+        </a>
+        {% if sesion.id_usuario_id == inquilino.id_usuario %}
+          <p>SI ENTRO </p>
+          <!-- {% if sesion.id_tipo_sesion == '1' %}
+            Tipo sesion: {{ sesion.id_tipo_sesion }} 
+            {% if sesion.dato == null %}
+            <p>No hay dato registrado en facial</p>
+            <input name="completado" type="checkbox" value="completado" /> 
+            <br>
+            {% else %}
+            <p>Si hay dato registrado en facial</p> -->
+            <!-- <input name="completado" type="checkbox" checked disabled/>   -->
+            <!-- <input name="completado" type=checkbox checked onclick="return false;"/> -->
+            <!-- <input name="completado" type=checkbox checked onclick="return false;" onkeydown="return true;" /> -->
+            <!-- {% endif %}
+          {% elif sesion.id_tipo_sesion == '2' %}
+            Tipo sesion: {{ sesion.id_tipo_sesion }} 
+            {% if sesion.dato == null %}
+            <p>No hay dato registrado en voz</p>
+            <input name="completado" type="checkbox" value="completado" /> 
+            <br> 
+            {% else %}
+            <p>Si hay dato registrado en voz</p> -->
+            <!-- <input name="completado" type="checkbox" checked disabled/>   -->
+            <!-- <input name="completado" type=checkbox checked onclick="return false;"/> -->
+            <!-- <input name="completado" type=checkbox checked onclick="return false;" onkeydown="return true;" /> -->
+            <!-- {% endif %}
+          {% elif sesion.id_tipo_sesion == '3' %}
+            Tipo sesion: {{ sesion.id_tipo_sesion }} 
+            {% if sesion.dato == null %}
+            <p>No hay dato registrado en huella</p>
+            <input name="completado" type="checkbox" value="completado" /> 
+            <br> 
+            {% else %}
+            <p>Si hay dato registrado en huella</p> -->
+            <!-- <input name="completado" type="checkbox" checked disabled/>   -->
+            <!-- <input name="completado" type=checkbox checked onclick="return false;"/> -->
+            <!-- <input name="completado" type=checkbox checked onclick="return false;" onkeydown="return true;" /> -->
+           <!-- {% endif %}
+          {% endif %} -->
+        
+        {% endif %}
+        
+        <ul class="list-group list-group-unbordered mb-3">
+          <h1>Datos Biométricos</h1>
+           {% for sesion in sesiones %} 
+            {% if sesion.id_usuario_id == inquilino.id_usuario %}
+              {% if sesion.id_tipo_sesion == '1' %}
+                <li class="list-group-item">
+                  <b>Facial</b>  <input name="completado" type="checkbox" value="completado" /><a class="float-right">1,322</a>
+                  <p>Id sesion: {{ sesion.id_sesion }}</p>
+                  <p>id_usuario: {{sesion.id_usuario_id}}</p>
+                  <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+                  <p>dato : {{sesion.dato}} </p>
+                  <p>dato : 
+                    <img src="{{python6423}}">
+                  </p>
+                  <p> completado : {{sesion.completado}}</p>
+                  {% if sesion.completado == True %}
+                  <input name="completado" type=checkbox checked onclick="return false;"/>
+                  {% else %}  
+                  <input name="completado" type=checkbox  onclick="return false;"/>
+                  {% endif %}
+                </li>
+              {% endif %}
+              {% if sesion.id_tipo_sesion == '3' %}
+                <li class="list-group-item">
+                  <b>Huella</b> <input name="completado" type="checkbox" value="completado" /><a class="float-right">543</a>
+                  <p>Dato: {{sesion.dato}}</p>
+                  <p>Id sesion: {{ sesion.id_sesion }}</p>
+                  <p>id_usuario: {{sesion.id_usuario_id}}</p>
+                  <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+                  <p>dato : {{sesion.dato}} </p>
+                  <p> completado : {{sesion.completado}}</p>
+                  {% if sesion.completado == True %}
+                  <input name="completado" type=checkbox checked onclick="return false;"/>
+                  {% else %}  
+                  <input name="completado" type=checkbox  onclick="return false;"/>
+                  {% endif %}
+                </li>
+              {% endif %}
+              {% if sesion.id_tipo_sesion == '2' %}
+                <li class="list-group-item">
+                  <b>Voz</b><input name="completado" type="checkbox" value="completado" /> <a class="text-right">13,287</a>
+                  <p>Dato: {{sesion.dato}}</p>
+                  <p>Id sesion: {{ sesion.id_sesion }}</p>
+                  <p>id_usuario: {{sesion.id_usuario_id}}</p>
+                  <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+                  <p>dato : {{sesion.dato}} </p>
+                  <p>dato : {{python6423}}</p>
+                  <p> completado : {{sesion.completado}}</p>
+                  {% if sesion.completado == True %}
+                  <input name="completado" type=checkbox checked onclick="return false;"/>
+                  {% else %}  
+                  <input name="completado" type=checkbox  onclick="return false;"/>
+                  {% endif %}
+    
+                </li>
+              {% endif %}
+
+            {% endif %} 
+            
+           {% endfor %}
+         
+        </ul>
+         
+       
         <!-- DELETE REQUEST -->
-        <form action="{% url 'sistemabio:delete_inquilino' inquilino.id_usuario %}" method="POST" >
-          {% csrf_token %}
-          <button class="btn btn-danger">Delete</button>
-          <!-- <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" class="btn btn-danger btn-block ">
-            <span class="material-icons me-1">delete</span>
-            Eliminar
-            </button> -->
-        </form>
-      </div>
-    <!-- </div> -->
+        
+        <a class="btn btn-danger" href="{% url 'sistemabio:delete_inquilino' inquilino.id_usuario  %}">Delete
+          <i class='fas fa-trash-alt' style='font-size:24px;color:rgb(243, 243, 243)'></i></a>
+        
+        <!-- <form action="{% url 'sistemabio:delete_inquilino' inquilino.id_usuario %}" method="POST" >
+                  {% csrf_token %}
+                  <button class="btn btn-danger">Delete <i class='fas fa-trash-alt' style='font-size:24px;color:rgb(243, 243, 243)'></i></button>
+                </form> -->
+        
+        </div>
     <br>
   </div>
   
