@@ -19,16 +19,29 @@ from django.db.models import Q
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .models import Usuario, Sesion
-from .forms import InquilinoForm, SesionForm, SesionForm2, SesionForm3
+from .forms import InquilinoForm, SesionForm, SesionFormUsuario, SesionForm3, SesionFormVoz
 
 
 #Administrador e Index
 def index(request):
      title='Index'
     # return HttpResponse("Hello, world. You're at the polls index.")
+     return render (request,"sistemabio/index2.html",{
+          'mytitle':title
+     })  
+def home_admin(request):
+     title='Index Admin'
+    # return HttpResponse("Hello, world. You're at the polls index.")
      return render (request,"sistemabio/index.html",{
           'mytitle':title
      })  
+def home_usuario(request):
+     title='Index Admin'
+    # return HttpResponse("Hello, world. You're at the polls index.")
+     return render (request,"sistemabio/index3u.html",{
+          'mytitle':title
+     })
+
 def signup(request):
         if request.method == 'GET':
             print('enviando formulario')
@@ -408,17 +421,10 @@ def facial(request, usuario_id):
                     print(imagepath)
                     image_file = open(personPath +'/'+filename, 'rb')
                     image = image_file.read()
-                    # # Añadir un espacio en blanco antes de los datos de la imagen
-                    # space = b','  # Espacio en blanco como bytes
-                    # image_data_with_space = space + image
-                    # image_array.append(image_data_with_space)
-
-                    # # image_array.append(' ' + image)
+                    
                     
                count += 1
                print(new_facial)
-               # combined_image_data = b''.join(image_array)
-               # new_facial.dato = combined_image_data
                new_facial.dato = image
                print(new_facial.dato)
                new_facial.completado = True
@@ -435,8 +441,89 @@ def facial(request, usuario_id):
                               { 'inquilino': inquilino,"form":  form , 
                               "error": "Error creando el registro facial."})
           
-                    
-def voz(request,usuario_id):
+
+def voz3(request, usuario_id):
+     if request.method == "GET":
+         inquilino = get_object_or_404(Usuario,pk=usuario_id)
+         form= SesionFormVoz(instance=inquilino)
+         return render(request, 'sistemabio/vozjj.html', 
+                       {  'inquilino':inquilino,
+                          "form": form
+                        })
+     else :
+          form= SesionFormVoz(request.POST)
+          new_voz = form.save(commit=False)
+          if form.is_valid():
+               print("formulario", form.is_valid())
+               new_voz.save()
+               print('for', form['id_usuario'].value())
+               print('form ', form['id_tipo_sesion'].value())
+               dato = form['dato'].value()
+               inquilino = get_object_or_404(Usuario,pk=usuario_id)
+               print('id usuario: ', usuario_id)
+               print('usuario: ',inquilino.nombre, inquilino.ap_paterno, inquilino.ap_materno ) 
+               personName =  str(usuario_id) + inquilino.nombre + inquilino.ap_paterno + inquilino.ap_materno 
+               print("Nombre de personName es: ", personName)
+               dataPath = 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/inquilinos' + '/' + personName
+               personPath = dataPath + '/' + 'VOZ' + personName
+               print("Nombre de carpeta es: ", personPath)
+               if not os.path.exists(personPath):
+                    try:
+                         os.mkdir(personPath, mode=0o755)
+                         print('Carpeta creada: ',personPath)
+                    except OSError as e:
+                         if e.errno!=errno.EEXIST:
+                              raise
+               else :
+                    print('el directorio ya existe')
+               # Decodificar la cadena Base64
+               datos_decodificados = base64.b64decode(dato)
+               # Guardar los datos de audio en un archivo
+               voz_name = 'audio_user_'+ str(usuario_id) +'.wav'
+               print('voz_name: ',voz_name)
+               # Ahora, tienes los datos de audio en su formato original en el archivo "audio_original.wav"
+               with open(personPath+'/'+voz_name, 'wb') as audio_file:
+                    audio_file.write(datos_decodificados)
+               print('audio guardado')
+
+
+               messages.success(request," El registro de voz ha sido un éxito.")
+               return redirect('/sistemabio/inquilinos/')
+          else:
+               messages.error(request, "Error no se creo el registro de voz.")
+               return render(request, 'sistemabio/vozjj.html', 
+                              { 
+                               'inquilino': inquilino,
+                               "form":  form, 
+                              "error": "Error creando el registro de voz."})
+     # title='Voz'
+     # return render (request,'sistemabio/voz.html',{
+     #      'mytitle':title
+     # })
+
+
+def voz2(request, usuario_id):
+    if request.method == "POST":
+        form = SesionFormVoz(request.POST)
+        print('form ', form['id_tipo_sesion'].value())
+        print('form ', form['dato'].value())
+        if form.is_valid():
+            form.save()  # Guarda el formulario
+            messages.success(request, "El registro de voz ha sido un éxito.")
+            return redirect('/sistemabio/inquilinos/')
+        else:
+            messages.error(request, "Error creando el registro de voz.")
+
+    else:
+        inquilino = get_object_or_404(Usuario, pk=usuario_id)
+        form = SesionFormVoz(instance=inquilino)
+
+    return render(request, 'sistemabio/vozjj.html', {
+        'inquilino': inquilino,
+        "form": form
+    })
+                   
+def huella(request,usuario_id):
      if request.method == "GET":
          inquilino = get_object_or_404(Usuario,pk=usuario_id)
          form= SesionForm3(instance=inquilino)
@@ -446,29 +533,30 @@ def voz(request,usuario_id):
                         })
      else:
           try:
-               # inquilino = get_object_or_404(Usuario,pk=usuario_id)
-               # form = SesionForm3(request.POST,instance=inquilino)
                form = SesionForm3(request.POST)
                print("formulario", form.is_valid())
-               new_voz = form.save(commit=False)
-               new_voz.save()
-               # form.save()
-               print('usuario id voz ', usuario_id)
-               messages.success(request," El registro de voz ha sido un éxito.")
-               return redirect('/sistemabio/inquilinos/')
+               new_huella = form.save(commit=False)
           except ValueError:
-               messages.error(request, "Error no se creo el registro de voz.")
+               messages.error(request, "Error no se creo el registro de huella.")
                return render(request, 'sistemabio/voz.html', 
-                              { 
-                              #     'inquilino': inquilino,
-                                  "form":  form , 
-                              "error": "Error creando el registro de voz."})
-     # title='Voz'
-     # return render (request,'sistemabio/voz.html',{
+                              { 'inquilino': inquilino,"form":  form , 
+                              "error": "Error creando el registro de huella."})
+     
+     # title='huella'
+     # return render (request,'sistemabio/vozjj.html',{
      #      'mytitle':title
      # })
 
-
+def ingresar_usuario(request):
+    title='ingresar_usuario'
+    return render (request,'sistemabio/ingresar.html',{
+         'mytitle':title
+    })
+def registrar_usuario(request):
+    title='registrar_usuario'
+    return render (request,'sistemabio/registrar.html',{
+         'mytitle':title
+    })
 
 
 

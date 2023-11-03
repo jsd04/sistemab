@@ -103,7 +103,7 @@
                         });
                         
                         Webcam.attach('#my_camera');
-                        var numPhotos = 10; // Número total de fotos que se van a capturar
+                        var numPhotos = 25; // Número total de fotos que se van a capturar
                         var photoCounter = 0; // Contador de fotos capturadas
                         const data_uri2 = [];
                         function takeSnapshotAndSend() {
@@ -115,22 +115,19 @@
                               // '<img id="imageprev" src="'+data_uri+'"/>';
                               '<img id="imageprev" src="'+data_uri+'"/>';
                               var valor = document.getElementById("results").innerHTML;
-                              
-                              console.log("valor",valor);
-                              // document.getElementById("id_dato").value = valor ;
-                              // console.log("valor2",valor);
+                              // console.log("valor",valor);
                               document.getElementById("id_dato").value = data_uri ;
-                              console.log("dta uri",data_uri);
+                              // console.log("dta uri",data_uri);
                               data_uri2.push(' ' + data_uri);
-                              console.log("dta uri2",data_uri2);
+                              // console.log("dta uri2",data_uri2);
                               document.getElementById("id_dato").value = data_uri2 ;
                               // Incrementar el contador de fotos capturadas
                               photoCounter++;
-                              console.log("Foto tomada ", photoCounter)
+                              // console.log("Foto tomada ", photoCounter)
                             });
                           }
                           console.log("Total de Fotos tomadas ", photoCounter) 
-                          print('array',data_uri2)
+                          // print('array',data_uri2)
                         }
                       </script>
                     </div>                   

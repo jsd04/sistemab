@@ -1,0 +1,227 @@
+
+
+{% extends "sistemabio/base.html" %}
+{% load static %}
+{% block content %}
+ 
+
+<header class="row" style="position: relative; height: 50vh; width: 100%;">
+  <div class="col s12 m11 l9 xl8 " style="position: absolute; top: 0px; height: 60%; left: 0px;">
+    <img alt="imagen1" src="{% static 'sistemabio/img/rec4.png' %}" class="responsive-image"
+      style="height: 200%; width: 80%; left: 0px; top: 0px; position: absolute; object-fit: cover;" />
+  </div>
+  <div class="col s12 m9 l9 xl8 white-text"
+    style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;">
+    <br>
+    <br>
+    <blockquote>
+
+      <h2 class="subtitulo black-text ">
+        <b>
+          VOZ <br />
+        </b>
+      </h2>
+    </blockquote>
+  </div>
+
+  <div class="col m6 l6 xl5 hide-on-small-only" style="height: 100%; position: absolute; top: 0%; right: 0%;">
+    <img alt="" src="{% static 'sistemabio/img/parteba9.png' %}" class="responsive-img"
+      style="position: absolute; right: -5px; top: 0px; height: 100%; width: 50%;">
+  </div>
+</header>
+<br />
+<br />
+<br />
+
+<!-- <div class="output-container">
+    <div class="output-sizer">
+      <div class="app">
+        <a id="download" href="#" download="output.wav">Descargar</a>
+        <div class="audio-controls">
+          <button id="record">Grabar</button>
+          <button id="stop" disabled>Detener</button>
+          <audio id="audio" controls="" src="blob:https://cdpn.io/d5919a41-ddd3-46c8-ac53-4cf483aa4afe" style="display: none;"></audio>
+        </div>
+        <div id="msg" style="visibility: hidden;">Grabando...</div>
+      </div>
+    </div>
+  </div> -->
+  <div class="output-container">
+    <div class="output-sizer">
+      <div class="app">
+        <a id="download" href="#" download="output.wav" style="display: none;">Descargar</a>
+        <div class="audio-controls">
+          <button id="record">Grabar</button>
+          <button id="stop" style="display: none;">Stop</button>
+          <button id="play" style="display: none;">Reproducir</button>
+          <audio id="audio" controls="" style="display: none;"></audio>
+        </div>
+        <div id="msg" style="visibility: hidden;">Grabando...</div>
+      </div>
+  
+      <script>
+        (async () => {
+          let leftchannel = [];
+          let rightchannel = [];
+          let recorder = null;
+          let recording = false;
+          let recordingLength = 0;
+          let volume = null;
+          let audioInput = null;
+          let sampleRate = null;
+          let AudioContext = window.AudioContext || window.webkitAudioContext;
+          let context = null;
+          let analyser = null;
+          let canvas = null;
+          let tested = false;
+  
+          try {
+            window.stream = stream = await getStream();
+            console.log('Got stream');
+          } catch (err) {
+            alert('Issue getting mic', err);
+          }
+  
+          function getStream(constraints) {
+            if (!constraints) {
+              constraints = { audio: true, video: false };
+            }
+            return navigator.mediaDevices.getUserMedia(constraints);
+          }
+  
+          setUpRecording();
+  
+          function setUpRecording() {
+            context = new AudioContext();
+            sampleRate = context.sampleRate;
+            volume = context.createGain();
+            audioInput = context.createMediaStreamSource(stream);
+            analyser = context.createAnalyser();
+            audioInput.connect(analyser);
+            let bufferSize = 2048;
+            let recorder = context.createScriptProcessor(bufferSize, 2, 2);
+            analyser.connect(recorder);
+            recorder.connect(context.destination);
+            recorder.onaudioprocess = function (e) {
+              if (!recording) return;
+              console.log('recording');
+              let left = e.inputBuffer.getChannelData(0);
+              let right = e.inputBuffer.getChannelData(1);
+              if (!tested) {
+                tested = true;
+                if (!left.reduce((a, b) => a + b)) {
+                  alert("There seems to be an issue with your Mic");
+                  stop();
+                  stream.getTracks().forEach(function (track) {
+                    track.stop();
+                  });
+                  context.close();
+                }
+              }
+              leftchannel.push(new Float32Array(left));
+              rightchannel.push(new Float32Array(right));
+              recordingLength += bufferSize;
+            };
+          }
+  
+          function mergeBuffers(channelBuffer, recordingLength) {
+            let result = new Float32Array(recordingLength);
+            let offset = 0;
+            let lng = channelBuffer.length;
+            for (let i = 0; i < lng; i++) {
+              let buffer = channelBuffer[i];
+              result.set(buffer, offset);
+              offset += buffer.length;
+            }
+            return result;
+          }
+  
+          function interleave(leftChannel, rightChannel) {
+            let length = leftChannel.length + rightChannel.length;
+            let result = new Float32Array(length);
+            let inputIndex = 0;
+            for (let index = 0; index < length;) {
+              result[index++] = leftChannel[inputIndex];
+              result[index++] = rightChannel[inputIndex];
+              inputIndex++;
+            }
+            return result;
+          }
+  
+          function writeUTFBytes(view, offset, string) {
+            let lng = string.length;
+            for (let i = 0; i < lng; i++) {
+              view.setUint8(offset + i, string.charCodeAt(i));
+            }
+          }
+  
+          function start() {
+            recording = true;
+            document.querySelector('#msg').style.visibility = 'visible';
+            leftchannel.length = rightchannel.length = 0;
+            recordingLength = 0;
+            if (!context) setUpRecording();
+          }
+  
+          function stop() {
+            recording = false;
+            document.querySelector('#msg').style.visibility = 'hidden';
+            let leftBuffer = mergeBuffers(leftchannel, recordingLength);
+            let rightBuffer = mergeBuffers(rightchannel, recordingLength);
+            let interleaved = interleave(leftBuffer, rightBuffer);
+            let buffer = new ArrayBuffer(44 + interleaved.length * 2);
+            let view = new DataView(buffer);
+            writeUTFBytes(view, 0, 'RIFF');
+            view.setUint32(4, 44 + interleaved.length * 2, true);
+            writeUTFBytes(view, 8, 'WAVE');
+            writeUTFBytes(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 2, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 4, true);
+            view.setUint16(32, 4, true);
+            view.setUint16(34, 16, true);
+            writeUTFBytes(view, 36, 'data');
+            view.setUint32(40, interleaved.length * 2, true);
+            let lng = interleaved.length;
+            let index = 44;
+            let volume = 1;
+            for (let i = 0; i < lng; i++) {
+              view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
+              index += 2;
+            }
+            const blob = new Blob([view], { type: 'audio/wav' });
+            const audioUrl = URL.createObjectURL(blob);
+            document.querySelector('#audio').setAttribute('src', audioUrl);
+            document.querySelector('#play').style.display = 'block';
+            document.querySelector('#record').style.display = 'block';
+            document.querySelector('#stop').style.display = 'none';
+          }
+  
+          document.querySelector('#record').onclick = e => {
+            console.log('Start recording');
+            start();
+            document.querySelector('#record').style.display = 'none';
+            document.querySelector('#stop').style.display = 'block';
+          };
+  
+          document.querySelector('#stop').onclick = e => {
+            stop();
+          };
+  
+          document.querySelector('#play').onclick = e => {
+            const audio = document.querySelector('#audio');
+            audio.play();
+          };
+        })();
+      </script>
+    </div>
+  </div>
+aw  
+  
+      
+  
+
+<br>
+{% endblock %}

@@ -3,6 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+  
+    <!-- <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script> -->
+  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SistemaBIO</title>
     <!-- <img src="{% static 'sistemabio/img/1.png' %}" alt="My image"> -->
@@ -44,9 +47,38 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
+      <style>
+        #msg {
+          visibility: hidden;
+          color: red;
+          font-weight: bold;
+          font-size: 22px;
+          font-family: Verdana;
+        }
+        button {
+          padding: 5px 10px;
+          border: 1px solid grey;
+          font-size: 18px;
+          background: white;
+        }
+        
+        .audio-controls {
+          display: flex;
+          align-items: center;
+          padding-top: 20px;
+          justify-content: center;
+        }
+        .audio-controls button {
+          margin: 0px 5px;
+        }
+        canvas {
+          margin-top: 10px;
+          background-color: black;
+        }
+        
+        </style>
     </head>
-    <body>
+    <body translate="no">
     {% include 'sistemabio/navigation.html' %}
     {% if messages %}
       {% for message in messages %}

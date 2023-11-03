@@ -1,6 +1,8 @@
 from django.forms import ModelForm
 from django import forms
 from .models import Usuario, Sesion
+from django.db import models
+
 
 class InquilinoForm(forms.ModelForm): 
     class Meta:
@@ -45,14 +47,30 @@ class SesionForm(ModelForm):
         # self.fields['id_tipo_sesion'].widget.attrs['class']='form-control'
          self.fields['id_usuario'].widget.attrs['class']= 'form-control'
 #solo dato
-class SesionForm2(ModelForm):
+class SesionFormUsuario(ModelForm):
     class Meta:
         model = Sesion
         fields = ['dato' ]
     def __init__(self, *args,**kwargs):
-        super(SesionForm2,self).__init__(*args,**kwargs)
-        
+        super(SesionFormUsuario,self).__init__(*args,**kwargs)
         self.fields['dato'].widget.attrs['class']= 'form-control'
+
+# form simple dato
+
+# class MiFormularioSimple(ModelForm):
+#     dato_simple = models.BinaryField(editable=True)
+
+#     widgets = {
+#         'dato_simple': forms.TextInput(attrs={'class': 'form-control'})
+#         , 'label'='dato'))
+#     }
+
+class MiFormularioSimple(forms.Form):
+  #  dato_simple = forms.CharField('label'='Dato')
+    dato_simple = forms.CharField(label='Dato', widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+        
 #todo el modelo
 class SesionForm3(ModelForm):
     class Meta:
@@ -69,5 +87,23 @@ class SesionForm3(ModelForm):
          self.fields['id_tipo_sesion'].widget.attrs['class']='form-control' 
          self.fields['id_tipo_sesion'].label= 'Tipo Session'
          #self.fields['completado'].label= 'Hecho'
+
+#todo el modelo voz
+class SesionFormVoz(ModelForm):
+    class Meta:
+        model = Sesion
+        fields = ['id_usuario', 'dato','id_tipo_sesion','completado']
+        labels = {'completado':'Completo',}
+    def __init__(self, *args,**kwargs):
+         super(SesionFormVoz,self).__init__(*args,**kwargs)
+         #Widgets son los que se van a pintan en forma de etiquetas html
+         self.fields['id_usuario'].widget.attrs['class']= 'form-control' 
+         self.fields['id_usuario'].label= 'Usuario'
+         self.fields['dato'].widget.attrs['class']='form-control' 
+         self.fields['id_tipo_sesion'].widget.value='2'
+         self.fields['id_tipo_sesion'].widget.attrs['class']='form-control' 
+         self.fields['id_tipo_sesion'].label= 'Tipo Session'
+         #self.fields['completado'].label= 'Hecho'
+
 
 
