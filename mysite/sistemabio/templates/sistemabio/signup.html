@@ -6,17 +6,6 @@
   <link rel="stylesheet" href="/static/admin/css/login.css">
 <link rel="stylesheet" href="/static/admin/css/responsive.css">
 </head>
-<h1>
-  {{mytitle}}
-</h1>
-{{error}}
-<!-- <form action="/sistemabio/signup/" method="POST">
-  {% csrf_token %} 
-  {{form.as_p}}
-
-
-      <button class="btn btn-primary">Signup</button>
-    </form> -->
 
     <div class="col-md-7 mx-auto">
       <div class="card mt-5 bg-success text-white rounded" style="--bs-bg-opacity: .7;">
@@ -34,12 +23,12 @@
           <form action="/sistemabio/signup/" method="POST" enctype="multipart/form-data">
             {% csrf_token %} 
             <div class="mb-3">
-              <label for="username">Nombre:</label>
+              <label for="username">Username:</label>
               <input
                 type="text"
                 class="form-control bg-white text-dark "
                 name="username"
-                placeholder="Nombre Apellido Paterno Apellido Marterno"
+                placeholder="Username"
                 autofocus
               />
             </div>
@@ -54,22 +43,24 @@
               />
             </div>
             <div class="mb-3">
-              <label for="telefono">No. Teléfono:</label>
+              <label for="first_name">Nombre:</label>
               <input
-                type="telefono"
-                name="telefono"
+                type="first_name"
+                name="first_name"
                 class="form-control  bg-white text-dark"
-                placeholder="5501030205"
+                placeholder="Nombre"
                 autofocus
               />
             </div>
             <div class="mb-3">
-              <label for="description">Domicilio:</label>
-              <textarea
-                name="domicilio"
-                class="form-control"
-                placeholder="Calle.Jesus Manuel No.17, Col.Luis Cordoba, Municipio/Delegación"
-              ></textarea>
+              <label for="last_name">Apellidos:</label>
+              <input
+                type="last_name"
+                name="last_name"
+                class="form-control bg-white text-dark"
+                placeholder="Apellidos"
+                autofocus
+                />
             </div>    
             <div class="mb-3">
               La contraseña debe cumplir los siguientes requerimientos:
@@ -97,130 +88,6 @@
                 value="{{confirm_password}}"
               />
             </div> 
-
-            <!--
-             <h4 class="text-dark">Datos Biométricos</h4>
-            <div class="row text-center">
-              <div class="col-4">
-                <label for="confirm_password"> Foto:</label>
-                <a class="waves-effect waves-light text-dark btn p-2 text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                     style="border-radius: 30px;" 
-                  >
-                  <i class="material-icons small rounded-circle " style="font-size:90px;"> 📷 
-                  </i> 
-                </a>
-              </div>
-              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                  <div class="modal-content text-dark">
-                    <div class="modal-header bg-success" style="--bs-bg-opacity: .5;">
-                      <h1 class="modal-title" id="staticBackdropLabel">Captura el rostro</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                       <div class="modal-body">
-                          <div class="container">
-                              <div class="row">
-                              <div class="col ">
-                                  <div id="my_camera"></div>
-                                  <br>
-                                  <video id="video" autoplay></video>
-                                  <canvas id="canvas" style="display: none;"></canvas>
-  
-                                  <div class="d-flex justify-content-center">
-                                  <button type="button" class="btn btn-primary" onclick="window.location.href = '/tomarFoto'">Capturar</button>
-                                  </div>
-  
-                              </div>
-                              
-                              </div>
-                          </div>
-                       </div>
-  
-  
-                    <div class="modal-footer bg-success" style="--bs-bg-opacity: .5;">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.body.removeChild(document.querySelector('img'))">Aceptar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-4">
-                <label for="confirm_password">Huella:</label>
-                <a class="waves-effect waves-light text-dark btn p-2 text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
-                     style="border-radius: 30px;" 
-                  >
-                  <i class="material-icons small rounded-circle " style="font-size:100px;">fingerprint
-                  </i>
-                </a>
-              </div>
-              <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                  <div class="modal-content text-dark">
-                    <div class="modal-header bg-success" style="--bs-bg-opacity: .5;">
-                      <h1 class="modal-title" id="staticBackdropLabel">Captura la huella</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                         <div class="container">
-                            <div class="row">
-                                <div class="col ">
-                                  
-                                    Aqui se hace la toma de muestras de la huella
-                                    <br>
-                                  <div class="d-flex justify-content-center">
-                                  <button type="button" class="btn btn-primary" onclick="window.location.href = '/tomarFoto'">Capturar Huella</button>
-                                  </div>
-                                </div>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="modal-footer bg-success" style="--bs-bg-opacity: .5;">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-              <div class="col-4">
-                <label for="confirm_password">Voz:</label>
-                <a class="waves-effect waves-light text-dark btn p-2 text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop3"
-                     style="border-radius: 30px;" 
-                  >
-                  
-                  
-                </a>
-              </div>  
-              <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                  <div class="modal-content text-dark">
-                    <div class="modal-header bg-success" style="--bs-bg-opacity: .5;">
-                      <h1 class="modal-title" id="staticBackdropLabel">Captura la voz</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                         <div class="container">
-                            <div class="row">
-                                <div class="col ">
-                                  
-                                    Aqui se hace la captura de voz
-                                    <br>
-                                  <div class="d-flex justify-content-center">
-                                  <button type="button" class="btn btn-primary" onclick="window.location.href = '/tomarFoto'">Capturar Voz</button>
-                                  </div>
-                                </div>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="modal-footer bg-success" style="--bs-bg-opacity: .5;">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>          
-            
-                
-            </div> -->
-
             <button class="btn btn-success btn-block">
               Registrarse
             </button>
@@ -232,8 +99,7 @@
           <a href="/sistemabio/signin" class="text-info">Entrar</a></p>
       </div>
     </div> 
-
- -
+<br>
 
 
 

@@ -1,8 +1,7 @@
 
 from django.urls import path
-
 from . import views
-from . import views2
+from . import views2f, view3v, view4h
 
 
 app_name = "sistemabio"
@@ -19,7 +18,6 @@ urlpatterns = [
     path("about/",views.about, name="about"),
     path("principal/",views.principal, name="principal"),
     path("perfil_administrador", views.perfil_administrador, name="perfil_administrador"),
-    path("administradores", views.administradores, name="administradores"),
 
     #Inquilinos
     path("inquilinos/",views.inquilinos, name="inquilinos"),
@@ -31,18 +29,18 @@ urlpatterns = [
     path("edit_inquilino/<int:usuario_id>/", views.edit_inquilino, name="edit_inquilino"),
 
     #Biométricos
-    path("new_biometricos/", views2.new_biometricos, name="new_biometricos"),
-    path("new_biometrico/<int:usuario_id>/", views.new_biometrico, name="new_biometrico"),
+    path("new_biometricos/", views.new_biometricos, name="new_biometricos"),
+    # path("new_biometrico/<int:usuario_id>/", views.new_biometrico, name="new_biometrico"),
     #Datos biométricos
-    path("facial/<int:usuario_id>/",views2.facial, name="facial"),
-    path("voz3/<int:usuario_id>/", views2.voz3,name="voz3"),
-    path("huella/<int:usuario_id>/", views2.huella,name="huella"),
+    path("facial/<int:usuario_id>/",views2f.facial, name="facial"),
+    path("voz3/<int:usuario_id>/", view3v.voz3,name="voz3"),
+    path("huella/<int:usuario_id>/", view4h.huella,name="huella"),
 
-    path("facial_usuario/",views2.facial_usuario, name="facial_usuario"),
-    path("voz_usuario/", views2.voz_usuario,name="voz_usuario"),
-    path("huella_usuario/", views2.huella_usuario,name="huella_usuario"),
+    path("facial_usuario/",views2f.facial_usuario, name="facial_usuario"),
+    path("voz_usuario/", view3v.voz_usuario,name="voz_usuario"),
+    path("huella_usuario/", view4h.huella_usuario,name="huella_usuario"),
 
-    path("accediste/", views2.accediste,name="accediste"),
+    path("accediste/", views2f.accediste,name="accediste"),
 
 
     

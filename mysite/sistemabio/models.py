@@ -1,12 +1,10 @@
 
 # Create your models here.
 import datetime
-
 from django.db import models
 from django.utils import timezone
-
-
 from django.contrib import admin
+
 # Create your models here.
 
 class Usuario(models.Model):
@@ -21,7 +19,7 @@ class Usuario(models.Model):
      # type: Number,
     departamento = models.IntegerField()
      # type: Number,
-    telefono = models.CharField(max_length=15)
+    telefono = models.CharField(max_length=10)
      # type: String, models.IntegerField()
     correo = models.EmailField()
     #  type: String,
@@ -30,18 +28,15 @@ class Usuario(models.Model):
     fecha_actualizado = models.DateTimeField(auto_now=True)
     # Campos con opciones
     CATALOGO_PERFIL = [
-        ('1', 'Administrador'),
-        ('2', 'Usuario Inquilino'),
-        ('3', 'Usuario Visitante'),
-        ('4', 'Usuario Trabajador'),
+        ('1', 'Usuario Inquilino'),
+        ('2', 'Usuario Visitante'),
+        ('3', 'Usuario Trabajador'),
     ]
     id_perfil = models.CharField(max_length=2, choices=CATALOGO_PERFIL, default='2')
     # Campos con opciones
     CATALOGO_STATUS = [
         ('1', 'ALTA'),
         ('2', 'BAJA'),
-        ('3', 'PENDIENTE'),
-        ('4', 'ALTA/COMPLETO'),
     ]
     id_status = models.CharField(max_length=2, choices=CATALOGO_STATUS, default='3')
 

@@ -96,7 +96,7 @@
                     reader.onload = function () {
                       const base64Recording = reader.result.split(",")[1]; // Extrae la parte de datos en base64
                       // Asigna la cadena base64 al campo "id_dato"
-                      document.getElementById("id_dato").value = base64Recording;
+                      document.getElementById("id_dato_simple").value = base64Recording;
                     };
                     reader.readAsDataURL(audioData);
                     // Clear the `chunks` buffer so that you can record again.
@@ -126,6 +126,7 @@
             <div class="col ">
               <form  method="POST" enctype="multipart/form-data" >
                 {% csrf_token %}
+                {{form}}
                 <!-- <label for="id_usuario">Usuario:</label>
                 <select class="form-control" type="text" id="id_usuario" name="id_usuario" >
                   <option value="{{inquilino.id_usuario}}" selected="selected">Id {{inquilino.id_usuario}} -> {{inquilino.id_usuario}} {{inquilino.nombre}} {{inquilino.ap_paterno}} {{inquilino.ap_materno}}</option>

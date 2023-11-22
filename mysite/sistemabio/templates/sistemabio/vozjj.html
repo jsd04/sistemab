@@ -50,7 +50,7 @@
             </p>
             <br>
             <p>
-              Al oprimir el boton de "Record" dirás la siguiente frase:
+              Al oprimir el boton de "Record" tendrás 5 segundos para decir la siguiente frase:
               "Acceso al edificio RS"
             </p>
             <div class="d-flex justify-content-center">
@@ -68,6 +68,17 @@
               let recording = false;
               let audioData = null;
               let base64Recording = null; // Variable para almacenar la grabación en base64
+              let timeoutID = null; // Variable para almacenar el ID del temporizador
+
+              // Function to stop recording
+              function stopRecording() {
+                if (recording) {
+                  mediaRecorder.stop();
+                  recording = false;
+                  $("#record").html("Record");
+                  clearTimeout(timeoutID); // Clear the timer
+                }
+              }
               // Ask the user for access to the microphone.
               if (navigator.mediaDevices) {
                 navigator.mediaDevices.getUserMedia({ "audio": true }).then((stream) => {
@@ -114,6 +125,11 @@
                             mediaRecorder.start();
                             recording = true;
                             $("#record").html("Stop");
+
+                            // Set a timer to stop recording after 5 seconds (5000 milliseconds)
+                            timeoutID = setTimeout(() => {
+                              stopRecording(); // Stop recording after 5 seconds
+                            }, 8000);
                       }
                   });
                 }).catch((err) => {

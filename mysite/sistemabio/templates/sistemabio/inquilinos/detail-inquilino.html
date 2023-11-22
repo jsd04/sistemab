@@ -70,7 +70,7 @@
     <!-- <div class="card" style=" border: 1.3px solid rgb(64, 113, 247);  "> "{% url 'sistemabio:edit_inquilino' inquilino.id_usuario %}" -->
       <div class="card-body box-profile ">
         <!-- <div class="text-center">
-          <img class="profile-user-img img-fluid img-circle" src="{% static 'sistemabio/images/Jess.jpg' %}"
+          <img class="profile-user-img img-fluid img-circle" src="{% static 'sistemabio/images/jpg' %}"
             alt="User profile picture">
         </div> -->
         <h3 class="d-flex p-2 flex-row-reverse">
@@ -87,142 +87,138 @@
         <br>
         <!-- <p class="text-muted text-center">{{ inquilino.id_perfil }}</p> -->
         <p>ID de usuario: {{ inquilino.id_usuario }}</p>
-        <p>Tipo de usuario: {{ inquilino.id_perfil }}</p>
+        <p>Tipo de usuario: {{ inquilino.get_id_perfil_display }}</p>
         <p>Curp: {{ inquilino.curp }} </p>
         <p>No. Piso: {{ inquilino.piso }} </p>
         <p>No. Departamento: {{ inquilino.departamento }} </p>
         <p>No. Teléfono: {{ inquilino.telefono }} </p>
         <p>Correo: {{ inquilino.correo }} </p>
         <p>Fecha de nacimiento: {{inquilino.fecha_nac }}</p>
-        <p>Status: {{inquilino.id_status}}</p>
+        <p>Status: {{inquilino.get_id_status_display}}</p>
         <p>Fecha de creación: {{ inquilino.fecha_creado }}</p>
         <p>Fecha de actualización: {{ inquilino.fecha_actualizado }}</p>
         
-        {% for sesion in sesiones %} 
+        <!-- {% for sesion in sesiones %} 
         {% if sesion.id_usuario_id == inquilino.id_usuario %}
         <h1>Datos Biométricos</h1>
            <p>Id sesion: {{ sesion.id_sesion }}</p>
            <p>id_usuario: {{sesion.id_usuario_id}}</p>
            <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
            <p>dato : {{sesion.dato}} </p>
-           
-           <!-- <p>dato : 
-            <img src="{{python6423}}">
-           </p> -->
-           
-           <p> fecha_creacion de usuario: {{sesion.fecha_creacion}} </p>
-           <p> fecha_actualizacion de usuario: {{sesion.fecha_actualizacion}}</p>
+           <p> fecha_creacion de biométrico: {{sesion.fecha_creacion}} </p>
+           <p> fecha_actualizacion de biométrico: {{sesion.fecha_actualizacion}}</p>
           {% endif %} 
-         
-        {% endfor %}
-        <p>hhh   </p>
-       
+        {% endfor %} -->
+        <p>
         <a href="https://biometricsystem.hugedata.systems/datos/">
-          <i class='fas fa-edit' style='font-size:36px'></i>
+          <i class='fas fa-edit' style='font-size:36px'> </i>
         </a>
-        {% if sesion.id_usuario_id == inquilino.id_usuario %}
-          <p>SI ENTRO </p>
-          <!-- {% if sesion.id_tipo_sesion == '1' %}
-            Tipo sesion: {{ sesion.id_tipo_sesion }} 
-            {% if sesion.dato == null %}
-            <p>No hay dato registrado en facial</p>
-            <input name="completado" type="checkbox" value="completado" /> 
-            <br>
-            {% else %}
-            <p>Si hay dato registrado en facial</p> -->
-            <!-- <input name="completado" type="checkbox" checked disabled/>   -->
-            <!-- <input name="completado" type=checkbox checked onclick="return false;"/> -->
-            <!-- <input name="completado" type=checkbox checked onclick="return false;" onkeydown="return true;" /> -->
-            <!-- {% endif %}
-          {% elif sesion.id_tipo_sesion == '2' %}
-            Tipo sesion: {{ sesion.id_tipo_sesion }} 
-            {% if sesion.dato == null %}
-            <p>No hay dato registrado en voz</p>
-            <input name="completado" type="checkbox" value="completado" /> 
-            <br> 
-            {% else %}
-            <p>Si hay dato registrado en voz</p> -->
-            <!-- <input name="completado" type="checkbox" checked disabled/>   -->
-            <!-- <input name="completado" type=checkbox checked onclick="return false;"/> -->
-            <!-- <input name="completado" type=checkbox checked onclick="return false;" onkeydown="return true;" /> -->
-            <!-- {% endif %}
-          {% elif sesion.id_tipo_sesion == '3' %}
-            Tipo sesion: {{ sesion.id_tipo_sesion }} 
-            {% if sesion.dato == null %}
-            <p>No hay dato registrado en huella</p>
-            <input name="completado" type="checkbox" value="completado" /> 
-            <br> 
-            {% else %}
-            <p>Si hay dato registrado en huella</p> -->
-            <!-- <input name="completado" type="checkbox" checked disabled/>   -->
-            <!-- <input name="completado" type=checkbox checked onclick="return false;"/> -->
-            <!-- <input name="completado" type=checkbox checked onclick="return false;" onkeydown="return true;" /> -->
-           <!-- {% endif %}
-          {% endif %} -->
-        
-        {% endif %}
-        
-        <ul class="list-group list-group-unbordered mb-3">
+       </p>
+        <!-- -->
+        <ul class="list-group list-group-unbordered mb-3 custom-list ">
+          {% if sesiones %}
           <h1>Datos Biométricos</h1>
-           {% for sesion in sesiones %} 
+          {% endif %}
+           <!-- {% for sesion in sesiones %} 
             {% if sesion.id_usuario_id == inquilino.id_usuario %}
               {% if sesion.id_tipo_sesion == '1' %}
                 <li class="list-group-item">
-                  <b>Facial</b>  <input name="completado" type="checkbox" value="completado" /><a class="float-right">1,322</a>
+                  <b>Facial </b> 
+                  {% if sesion.completado == True %}
+                  <input name="completado" type=checkbox checked onclick="return false;"/>
+                  {% else %}  
+                  <input name="completado" type=checkbox  onclick="return false;"/>
+                  {% endif %} 
                   <p>Id sesion: {{ sesion.id_sesion }}</p>
                   <p>id_usuario: {{sesion.id_usuario_id}}</p>
-                  <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
+                  <p>id_tipo_sesion : {{sesion.get_id_tipo_sesion_display}} </p>
                   <p>dato : {{sesion.dato}} </p>
                   <p>dato : 
                     <img src="{{python6423}}">
                   </p>
-                  <p> completado : {{sesion.completado}}</p>
-                  {% if sesion.completado == True %}
-                  <input name="completado" type=checkbox checked onclick="return false;"/>
-                  {% else %}  
-                  <input name="completado" type=checkbox  onclick="return false;"/>
-                  {% endif %}
-                </li>
-              {% endif %}
-              {% if sesion.id_tipo_sesion == '3' %}
-                <li class="list-group-item">
-                  <b>Huella</b> <input name="completado" type="checkbox" value="completado" /><a class="float-right">543</a>
-                  <p>Dato: {{sesion.dato}}</p>
-                  <p>Id sesion: {{ sesion.id_sesion }}</p>
-                  <p>id_usuario: {{sesion.id_usuario_id}}</p>
-                  <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
-                  <p>dato : {{sesion.dato}} </p>
-                  <p> completado : {{sesion.completado}}</p>
-                  {% if sesion.completado == True %}
-                  <input name="completado" type=checkbox checked onclick="return false;"/>
-                  {% else %}  
-                  <input name="completado" type=checkbox  onclick="return false;"/>
-                  {% endif %}
+                  <p>Fecha de creación de biométrico: {{sesion.fecha_creacion}} </p>
+                  <p>Fecha de actualización de biométrico: {{sesion.fecha_actualizacion}}</p>
                 </li>
               {% endif %}
               {% if sesion.id_tipo_sesion == '2' %}
                 <li class="list-group-item">
-                  <b>Voz</b><input name="completado" type="checkbox" value="completado" /> <a class="text-right">13,287</a>
-                  <p>Dato: {{sesion.dato}}</p>
-                  <p>Id sesion: {{ sesion.id_sesion }}</p>
-                  <p>id_usuario: {{sesion.id_usuario_id}}</p>
-                  <p>id_tipo_sesion : {{sesion.id_tipo_sesion }}</p>
-                  <p>dato : {{sesion.dato}} </p>
-                  <!-- <p>dato : {{python6423}}</p> -->
-                  <p> completado : {{sesion.completado}}</p>
+                  <b>Voz</b>
                   {% if sesion.completado == True %}
                   <input name="completado" type=checkbox checked onclick="return false;"/>
                   {% else %}  
                   <input name="completado" type=checkbox  onclick="return false;"/>
                   {% endif %}
-    
+                  <p>Dato: {{sesion.dato}}</p>
+                  <p>Id sesion: {{ sesion.id_sesion }}</p>
+                  <p>id_usuario: {{sesion.id_usuario_id}}</p>
+                  <p>id_tipo_sesion :  {{sesion.get_id_tipo_sesion_display}}</p>
+                  <p>dato : {{sesion.dato}} </p>
+                  <p>Fecha de creación de biométrico: {{sesion.fecha_creacion}} </p>
+                  <p>Fecha de actualización de biométrico: {{sesion.fecha_actualizacion}}</p>
                 </li>
               {% endif %}
-
+              {% if sesion.id_tipo_sesion == '3' %}
+                <li class="list-group-item">
+                  <b>Huella</b> <p> completado : {{sesion.completado}}</p> -->
+                <!--   {% if sesion.completado == True %}
+                  <input name="completado" type=checkbox checked onclick="return false;"/>
+                  {% else %}  
+                  <input name="completado" type=checkbox  onclick="return false;"/>
+                  {% endif %} 
+                  <p>Dato: {{sesion.dato}}</p>
+                  <p>Id sesion: {{ sesion.id_sesion }}</p>
+                  <p>id_usuario: {{sesion.id_usuario_id}}</p>
+                  <p>id_tipo_sesion :  {{sesion.get_id_tipo_sesion_display}}</p>
+                  <p>Dato : {{sesion.dato}} </p>
+                  <p>Fecha de creación de biométrico: {{sesion.fecha_creacion}} </p>
+                  <p>Fecha de actualización de biométrico: {{sesion.fecha_actualizacion}}</p>
+                </li>
+              {% endif %}
             {% endif %} 
-            
-           {% endfor %}
-         
+           {% endfor %} -->
+           {% for sesion in sesiones %}
+           {% if sesion.id_usuario_id == inquilino.id_usuario %}
+             <li class="list-group-item">
+               <!-- <p>Tipo de sesión: {{ sesion.get_id_tipo_sesion_display }}</p> -->
+               {% if sesion.id_tipo_sesion == '1' %}
+                 <b>Facial</b>
+               {% elif sesion.id_tipo_sesion == '2' %}
+                 <b>Voz</b>
+               {% elif sesion.id_tipo_sesion == '3' %}
+                 <b>Huella</b>               
+
+               {% endif %}
+               {% if sesion.completado %}
+                 <input name="completado" type="checkbox" checked onclick="return false;"/>
+               {% else %}
+                 <input name="completado" type="checkbox" onclick="return false;"/>
+               {% endif %}
+               <p>Id sesión: {{ sesion.id_sesion }}</p>
+               <p>Id usuario: {{ sesion.id_usuario_id }}</p>
+               <p>Dato: {{ sesion.dato }}</p>
+               {% if sesion.id_tipo_sesion == '1' %}
+                <p>Dato : 
+                  <img src="{{python6423}}">
+                </p>
+               {% endif %}
+               <p>Fecha de creación de biométrico: {{ sesion.fecha_creacion }}</p>
+               <p>Fecha de actualización de biométrico: {{ sesion.fecha_actualizacion }}</p>
+             </li>
+           {% endif %}
+         {% endfor %}
+           <br>
+           {% if sesiones|length < 3 %}
+           <div class="d-flex justify-content-end">
+             <a class="waves-effect waves-light text-white btn p-2 text-center  " style="background:rgb(6, 127, 202);border-radius: 20px;"
+               href="/sistemabio/new_biometricos"
+             >
+               Añadir Biométrico
+               <i class="material-icons text-white rounded-circlet btn p-2 text-center ">fingerprint mic photo_camera
+               </i>
+             </a>
+             <!-- <p>La cantidad de sesiones es: {{ sesiones|length }}</p> -->
+           </div>
+           {% endif %}
         </ul>
          
        

@@ -1,10 +1,7 @@
 {% extends "sistemabio/base.html" %}
 {% load static %}
 {% block content %}
- <h1>
-  {{mytitle}}
- </h1> 
- {{error}}
+
   <!-- <form action="/sistemabio/signin/" method="POST">
     {% csrf_token %} 
     {{form.as_p}}
@@ -30,12 +27,12 @@
         <form action="/sistemabio/signin/" method="POST">
           {% csrf_token %} 
           <div class="mb-3">
-            <label for="username">Nombre:</label>
+            <label for="username">Username:</label>
             <input
               type="text"
               class="form-control bg-white text-dark "
               name="username"
-              placeholder="Nombre Apellido Paterno Apellido Marterno"
+              placeholder="Username"
               autofocus
             />
              <!-- <label for="email">Correo:</label>
@@ -66,4 +63,5 @@
     </div>
   </div>
 </div>
+<br>
 {% endblock %}

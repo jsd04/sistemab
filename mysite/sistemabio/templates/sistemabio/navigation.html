@@ -23,23 +23,25 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span class="material-symbols-sharp rounded-circle">
-            account_circle
-            </span> Perfil
+            <i class='fas fa-cogs' style='font-size:24px; border-radius: 20px;'></i>Acciones
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/sistemabio/principal">
-            <span class="material-icons me-1"></span>Volver al menu principal
+            <a class="dropdown-item" href="/sistemabio/principal">Volver al menu principal
+              <i class='fas fa-address-card text-success p-2' style='font-size:24px; border-radius: 20px;'></i>
             </a>
-            <a class="dropdown-item" href="/sistemabio/perfil_administrador">Ver perfil
-            <i class="large material-icons">manage_accounts</i>
+            <a class="dropdown-item" href="{% url 'sistemabio:inquilinos' %}">Ver inquilinos
+              <i class='fas fa-users text-success p-2' style='font-size:24px; border-radius: 20px;'></i>
             </a>
-            <a class="dropdown-item" href="/sistemabio/administradores">Ver administradores
-            <i class="large material-icons">supervisor_account</i>
+            <a class="dropdown-item" href="/sistemabio/search_inquilino">Buscar
+            <i class="fa fa-search text-success p-2" style="font-size:24px; border-radius: 20px;"></i>
+            </a>
+            <a class="dropdown-item" href="/sistemabio/perfil_administrador">Administrador
+              <i class='fas fa-user-circle text-success p-2' style='font-size:24px; border-radius: 20px;'></i>
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/sistemabio/logout">Salir
-             <span class="material-icons me-1">logout</span>
+              <i class='fas fa-sign-out-alt text-success p-2' style='font-size:24px; border-radius: 20px;'></i>
+             <!-- <span class="material-icons me-1 " s>logout</span> -->
             </a>
             
           </ul>
@@ -55,8 +57,8 @@
       <!-- {% endif %} -->
       <li class="nav-item">
         <a class="nav-link" href="/sistemabio/about">
-            <span class="material-icons me-1">info</span>
-            About
+            <!-- <span class="material-icons me-1">info</span>About -->
+            <i class='fas fa-info-circle' style='font-size:24px; border-radius: 20px;'></i>About
         </a>
       </li>
         
