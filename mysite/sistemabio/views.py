@@ -22,7 +22,6 @@ def index(request):
      return render (request,"sistemabio/index2.html",{
           'mytitle':title
      })  
-@login_required
 def home_admin(request):
      title='Index Admin'
      return render (request,"sistemabio/index.html",{
@@ -180,29 +179,27 @@ def search_inquilino(request):
      inquilinos = Usuario.objects.all()
      if busqueda:
         inquilinos = Usuario.objects.filter(
-            Q(piso__icontains = busqueda) | 
-            Q(nombre__icontains = busqueda) |
-            Q(curp__icontains = busqueda) |
-            Q(departamento__icontains = busqueda)
+            Q(piso = busqueda) | 
+            Q(nombre = busqueda) |
+            Q(curp = busqueda) |
+            Q(departamento = busqueda)
         ).distinct()  
      if nombre:
         inquilinos = Usuario.objects.filter(
-            Q(nombre__icontains = nombre) 
+            Q(nombre = nombre) 
         ).distinct()  
         print('nombre des ',nombre)
      if piso:
         inquilinos = Usuario.objects.filter(
-            Q(piso__icontains = piso) 
+            Q(piso = piso) 
         ).distinct() 
         print('npiso des ',piso) 
      if departamento:
-        inquilinos = Usuario.objects.filter(
-            Q(departamento__icontains = departamento)
+        inquilinos = inquilinos.filter(
+            Q(departamento = departamento)
         ).distinct() 
         print('ndepartamento des ',departamento)
         print('inquilino es ',inquilinos)
-    # inquilino = get_object_or_404(Usuario,pk=inquilino_para)
-    #  inquilinos = Usuario.objects.filter(nombre='jessica sanchez pruebaF5')
      title='search'
      return render (request,"sistemabio/inquilinos/s-inquilinos.html",{
           'mytitle':title,

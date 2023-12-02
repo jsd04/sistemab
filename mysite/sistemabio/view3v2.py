@@ -49,6 +49,18 @@ from .models import Usuario, Sesion
 from .forms import MiFormularioSimple, SesionForm3, SesionFormVoz
 import subprocess
 
+import torch
+import torchaudio
+from clasificacion1 import UrbanSoundDataset
+from cnn1 import CNNNetwork
+from train1 import AUDIO_DIR, ANNOTATIONS_FILE, SAMPLE_RATE, NUM_SAMPLES
+
+class_mapping = [
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+]
 sns.set_theme(style="white", palette=None)
 color_pal = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 color_cycle = cycle(plt.rcParams["axes.prop_cycle"].by_key()["color"])
@@ -232,9 +244,35 @@ def voz3(request, usuario_id):
 def reconocimiento_voz(audio_cleaned_path,personPath_2):
     title='esto retorna un true o false'
     print('inicio de reconocimiento prediccion ')
-    
+    subprocess.run(['python', 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/prediction2.py'])
+    # print('finalizaciom de reconocimiento prediccion VOZ Tryue ')
+    # print('finalizaciom de reconocimiento prediccion VOZ Tryue ')
     print('finalizacion de reconocimiento prediccion VOZ')
     return title
+
+def load_model(model_path):
+    cnn = CNNNetwork()
+    state_dict = torch.load(model_path)
+    cnn.load_state_dict(state_dict)
+    return cnn
+
+def prepare_mel_spectrogram():
+    mel_spectrogram = torchaudio.transforms.MelSpectrogram(
+        sample_rate=SAMPLE_RATE,
+        n_fft=1024,
+        hop_length=512,
+        n_mels=64
+    )
+    return mel_spectrogram
+
+def perform_prediction(model, input, target, class_mapping):
+    model.eval()
+    with torch.no_grad():
+        predictions = model(input)
+        predicted_index = predictions[0].argmax(0)
+        predicted = class_mapping[predicted_index]
+        expected = class_mapping[target]
+    return predicted, expected
 
 
 def voz_usuario(request):
@@ -244,7 +282,9 @@ def voz_usuario(request):
             "form": form
         })
     else:
+        # form = MiFormularioSimple(request.POST)
         form = MiFormularioSimple(request.POST)
+        # new_facial_usuario = form.save(commit=False)
         print('form : ', form['dato_simple'].value())
         if form.is_valid():
             personPath = 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/newusuariov'
@@ -252,6 +292,7 @@ def voz_usuario(request):
             dato_simple = form['dato_simple'].value()
             # Decodificar la cadena Base64
             datos_decodificados = base64.b64decode(dato_simple)
+            # Guardar los datos de audio en un archivo
             voz_name = 'audio_nuevo_usuario.wav'
             print('voz_name: ',voz_name)
             # Ahora, tienes los datos de audio en su formato original en el archivo "audio_original.wav"
@@ -284,27 +325,69 @@ def voz_usuario(request):
                         print(f"Texto reconocido del archivo {filename}: {recognized_text}")
                         # Comparar con la frase específica
                         if recognized_text.lower() == frase_especifica2.lower():
-                            print("Sí, es la frase correcta.")                           
+                            print("Sí, es la frase correcta.")
+                            # segun yo ya no genera csv ni extrae coeficientes  ni red, solo predicion
+                            # archivo_csv (audio_trimmed_path,inquilino)
+                            # coeficientes(audio_trimmed_path)
+                            #  # Calcular los coeficientes MFCC
+                            #  extract_mfcc(audio_trimmed_path)
+                            #  #Extraer las mediciones del audio.
+                            #  extract_features(audio_trimmed_path)
+                            #  # Librería pyAudioAnalysis realizar la extracción (low-term) de varias características de una señal de audio
+                            #  extraccion(audio_trimmed_path)
+                            # cnn_voz(personPath)
+                            print('si termino voz') 
                             #Aqui mismo hacer reconocimiento
-                            if(reconocimiento_voz(audio_trimmed_path,personPath_2)):
-                                messages.success(request, "El reconocimiento de voz ha sido un éxito.")
-                                return redirect('/sistemabio/accediste/')
-                            else:
-                                messages.error(request, "Error no se reconocio la voz dentro de la base de datos.")
-                                return render(request, 'sistemabio/voz_usuario.html', 
-                                        { "form":  form, 
-                                        "error": "Error creando el registro de voz."}) 
+                            # if(reconocimiento_voz(audio_trimmed_path,personPath_2)):
+                            #     messages.success(request, "El reconocimiento de voz ha sido un éxito.")
+                            #     return redirect('/sistemabio/accediste/')
+                            # else:
+                            #     messages.error(request, "Error no se reconocio la voz dentro de la nase de datos.")
+                            #     return render(request, 'sistemabio/voz_usuario.html', 
+                            #             { "form":  form, 
+                            #             "error": "Error creando el registro de voz."}) 
+                            # proceso = subprocess.run(['python', 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/prediction2.py'], capture_output=True, text=True)
+                            # resultado_obtenido = proceso.stdout.strip()
+                            # print("resultado_obtenido: ",resultado_obtenido)
+                            cnn = load_model("C:/Users/yobis/Desktop/sistemabio/mysite/cnnnet1PRUEBAUsers.pth")
+                            mel_spectrogram = prepare_mel_spectrogram()
+
+                            usd = UrbanSoundDataset(ANNOTATIONS_FILE,
+                                                    AUDIO_DIR,
+                                                    mel_spectrogram,
+                                                    SAMPLE_RATE,
+                                                    NUM_SAMPLES,
+                                                    "cpu")  # predicciones con CPU
+
+                            input, target = usd[0][0], usd[0][1]  # [batch size, num_channels, fr, time]
+                            input.unsqueeze_(0)
+
+                            predicted, expected = perform_prediction(cnn, input, target, class_mapping)
+                            print(f"Prediccion: '{predicted}', Real: '{expected}'")
+                            # resultado = obtener_resultado_desde_archivo()
+                            # print(f"Resultado obtenido: {resultado}")
+                            # if(resultado == 'True'):
+                            #     messages.success(request, "El reconocimiento de voz ha sido un éxito.")
+                            #     return redirect('/sistemabio/accediste/')
+                            # else:
+                            #     messages.error(request, "Error no se reconocio la voz dentro de la nase de datos.")
+                            #     return render(request, 'sistemabio/voz_usuario.html', 
+                            #             { "form":  form, 
+                            #             "error": "Error creando el registro de voz."}) 
+                            
                         else:
                              print("no es la frase")
                              messages.error(request, "Error: Revisa que la frase sea correcta.")
                              return render(request, 'sistemabio/voz_usuario.html',{"form": form,"error": "Error creando el registro de voz."})
                     except sr.UnknownValueError:
                         print(f"No se pudo reconocer la voz en el archivo {filename}.")
-        else :
-            messages.error(request, "Error: No se ha llenado el formulario.")
-            return render(request, 'sistemabio/voz_usuario.html',{"form": form})    
+            
            
 
+    # title='voz_usuario'
+    # return render (request,'sistemabio/voz_usuario.html',{
+    #      'mytitle':title
+    # })
 
     
 

@@ -27,9 +27,7 @@
         </h4>
       </blockquote>
   </div>
-<!--style="height: 100%; position: absolute; top: 0%; right: 0%;"
-style="position: absolute; top: 50%; left: 30%; height: 100%; transform: translate(-50%, -50%); width: 50%;"
--->
+
   <div class=" col s12 m9 l9 xl8 white-text" style="height: 100%; position: absolute; top: 0%; right: 50%;">
     <img alt="" src="{% static 'sistemabio/img/parteba12_4.png' %}" 
     class="responsive-img" style="position: absolute; right: 0px; top: 0px; height: 120%; width: 50%;">
@@ -63,10 +61,6 @@ style="position: absolute; top: 50%; left: 30%; height: 100%; transform: transla
             <input type="text" class="form-control bg-light border-3 small solid rgb(61, 101, 213)" placeholder="Departamento" name="departamento" >
 
            
-            <!-- <div class="input-group-append">
-              <button class="btn btn-success" type="submit">
-                <i class="fas fa-search fa-sm"></i>
-              </button> -->
             <button class="btn btn-success" type="submit">
               <span class="material-symbols-rounded">
                 search
@@ -100,7 +94,7 @@ style="position: absolute; top: 50%; left: 30%; height: 100%; transform: transla
           <h4 class="card-title ">
            {{ inquilino.nombre}} {{ inquilino.ap_paterno}} {{ inquilino.ap_materno}}
           </h4>
-          <p>Tipo de usuario: {{ inquilino.id_perfil }}</p>
+          <p>Tipo de usuario: {{ inquilino.get_id_perfil_display }}</p>
           <p>Curp: {{ inquilino.curp }} </p>
           <p>No. Piso: {{ inquilino.piso }} </p>
           <p>No. Departamento: {{ inquilino.departamento }} </p>
