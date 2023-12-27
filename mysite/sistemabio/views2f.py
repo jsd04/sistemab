@@ -25,6 +25,7 @@ import torchaudio
 from pyAudioAnalysis import audioBasicIO, ShortTermFeatures
 import math
 import csv
+from ftplib import FTP
 from glob import glob
 import librosa
 import librosa.display
@@ -80,6 +81,7 @@ def facial(request, usuario_id):
                               raise
                else :
                     print('el directorio ya existe')
+              
                print('form dato: ', form['dato'].value())
                dato = form['dato'].value()
                dato_rep = str(dato).replace('data:image/jpeg;base64,', '')
@@ -100,7 +102,7 @@ def facial(request, usuario_id):
                     print('imagen decode: ',dato_utf )
                     #decodificamos los bytes en base64
                     img_decode = base64.b64decode(dato_utf)
-                    img_name= 'rostro_{}.jpg'.format(i)
+                    img_name = 'rostro_{}.jpg'.format(i)
                     img_file = open(personPath+'/'+img_name, 'wb')
                     img_file.write(img_decode)
                     i += 1
@@ -112,7 +114,9 @@ def facial(request, usuario_id):
                count = 0
                for filename in captureList:
                     imagepath = personPath+"/"+filename
+                    # imagepath_ftp = filename
                     print(imagepath)
+                    print('filesss: ',filename)
                     image = cv2.imread(imagepath)
                     if image is None: continue
                     imageAux = cv2.imread(imagepath)
@@ -123,9 +127,10 @@ def facial(request, usuario_id):
                          cv2.rectangle(image, (10, 5), (450, 25), (255, 255, 255), 2)
                          rostro = imageAux[y:y + h, x:x + w]
                          rostro = cv2.resize(rostro, (224, 224), interpolation=cv2.INTER_CUBIC)
-                         cv2.imwrite(personPath +'/'+ filename, rostro)
+                         image_rostro = personPath +'/'+ filename
+                         cv2.imwrite(image_rostro, rostro)
                          print('leyendo imagenerecorte')
-
+                         
                     imagepath = personPath+"/"+filename
                     print(imagepath)
                     image_file = open(personPath +'/'+filename, 'rb')
@@ -141,7 +146,7 @@ def facial(request, usuario_id):
                new_facial.save()
                cnn_facial(personPath)
                print('si termino')
-                    
+              
                messages.success(request," El registro facial ha sido un éxito.")
                return redirect('/sistemabio/inquilinos/')
           except ValueError:
@@ -158,6 +163,8 @@ def cnn_facial(personPath):
     # personName =  str(usuario_id) + inquilino.nombre + inquilino.ap_paterno + inquilino.ap_materno 
     # dataPath = 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/inquilinos' + '/' + personName
     # personPath = dataPath + '/' + 'FACIAL' + personName
+    
+
     time.sleep(30)
     captureList = os.listdir(personPath)
     images = []
@@ -266,7 +273,9 @@ def cnn_facial(personPath):
     # este paso puede tomar varios minutos, dependiendo de tu ordenador, cpu y memoria ram libre
     sport_train = sport_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
     # guardamos la red, para reutilizarla en el futuro, sin tener que volver a entrenar
-    sport_model.save("facecop_mnist_jessi.h5py")
+    model_lo = 'facecop_mnist_jessi2.h5py' 
+    sport_model.save(model_lo)
+    
     #Evaluamos la red
     print("Evaluamos la red")
     test_eval = sport_model.evaluate(test_X, test_Y_one_hot, verbose=1)
@@ -309,7 +318,6 @@ def facial_usuario(request):
             img_file = open(personPath+'/'+img_name, 'wb')
             img_file.write(img_decode)
             imagepath = detec_recorte(personPath)
-            
             #Aqui mismo hacer reconocimiento
             if(reconocimiento_facial(imagepath,personPath_2)):
                 messages.success(request, "El reconocimiento facial ha sido un éxito.")
@@ -324,6 +332,7 @@ def facial_usuario(request):
 
 def detec_recorte(personPath):
      # inicia la deteccion y recorte 
+     
     faceClassif = cv2.CascadeClassifier('C:/Users/yobis/Desktop/sistemabiors/SistemaBiometricoJessi/mysite/sistemabio/static/haarcascades/haarcascade_frontalface_default.xml')
     captureList = os.listdir(personPath)
     print('lista de imagenes', captureList)
@@ -342,18 +351,21 @@ def detec_recorte(personPath):
               cv2.rectangle(image, (10, 5), (450, 25), (255, 255, 255), 2)
               rostro = imageAux[y:y + h, x:x + w]
               rostro = cv2.resize(rostro, (224, 224), interpolation=cv2.INTER_CUBIC)
-              cv2.imwrite(personPath +'/'+ filename, rostro)
+              image_rostro = personPath +'/'+ filename
+              cv2.imwrite(image_rostro, rostro)
               print('leyendo imagenerecorte')
+              
+              
          imagepath = personPath+"/"+filename
          print(imagepath)
          image_file = open(imagepath, 'rb')
          image = image_file.read()
+        
          print('finalizo deteccion y recorte ')
     return imagepath
 
 def reconocimiento_facial(imagepath, personPath_2):
     print('inicio de reconocimiento prediccion ')
-        
     images = []
     directories = []
     dircount = []
@@ -402,8 +414,8 @@ def reconocimiento_facial(imagepath, personPath_2):
         print(indice , name[len(name)-1])
         deportes.append(name[len(name)-1])
         indice=indice+1
-
-    model = keras.models.load_model('facecop_mnist_jessi.h5py')
+     
+    model = keras.models.load_model('facecop_mnist_jessi2.h5py')
     # Cargar y preprocesar la nueva imagen que deseas predecir
     new_image_path = imagepath
     new_image = plt.imread(new_image_path)

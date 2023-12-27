@@ -25,8 +25,10 @@ urlpatterns = [
     path("search_inquilino/",views.search_inquilino, name="search_inquilino"),
     path("detail_inquilino/<int:usuario_id>/",views.detail_inquilino, name ="detail_inquilino"),
     # path("detail_inquilino2/<int:usuario_id>/<int:sesion_idu>/",views.detail_inquilino2, name ="detail_inquilino2"),
-    path("delete_inquilino/<int:inquilino_id>/", views.delete_inquilino, name="delete_inquilino"),
+    path("darbaja_inquilino/<int:inquilino_id>/", views.darbaja_inquilino, name="darbaja_inquilino"),
     path("edit_inquilino/<int:usuario_id>/", views.edit_inquilino, name="edit_inquilino"),
+    path ("reporte", views.reporte, name="reporte"),
+
 
     #Biométricos
     path("new_biometricos/", views.new_biometricos, name="new_biometricos"),

@@ -8,13 +8,25 @@ import errno
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from ftplib import FTP
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .models import Usuario, Sesion
-from .forms import InquilinoForm, SesionForm, SesionFormUsuario, SesionForm3, SesionFormVoz
+from .forms import InquilinoForm, SesionForm, ReporteForm 
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from django.http import HttpResponse
+from io import BytesIO
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph,Image
+
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
+from reportlab.lib import colors
 
 #Administrador e Index
 def index(request):
@@ -66,7 +78,6 @@ def signup(request):
                             'form':UserCreationForm
                         } )   
  
-
 def signin(request):
          if request.method == "GET":
             title='Iniciar sesion'
@@ -160,6 +171,7 @@ def new_inquilino(request):
                  if e.errno!=errno.EEXIST:
                       raise
             return redirect('/sistemabio/new_biometricos/')
+
         except ValueError:
             messages.error(request, "Error no se creo el inquilino.")
             return render(request, 'sistemabio/inquilinos/new-inquilino.html', 
@@ -200,6 +212,8 @@ def search_inquilino(request):
         ).distinct() 
         print('ndepartamento des ',departamento)
         print('inquilino es ',inquilinos)
+
+
      title='search'
      return render (request,"sistemabio/inquilinos/s-inquilinos.html",{
           'mytitle':title,
@@ -222,19 +236,19 @@ def detail_inquilino(request, usuario_id):
           print('dato: ',sesion['dato'])
           pytho = base64.b64encode(sesion['dato'])
           print('-------------------------------')
-          print(pytho)
+          # print(pytho)
           python642 = pytho.decode('utf-8')
           print('+++++++++++++++++++++++++++++++++')
-          print(python642)
+          # print(python642)
           datos_div = python642.split()
           i=0
           for dato_div in datos_div:
                variable = datos_div[i]
                print('************************************************************')
-               print('cadena dividida: ',variable)
+               # print('cadena dividida: ',variable)
                python6423 = 'data:image/jpg;base64,' + str(variable)
                print('***********************')
-               print('uuuuuuuuuu',python6423)
+               # print('uuuuuuuuuu',python6423)
     if python6423:
         return render(request, "sistemabio/inquilinos/detail-inquilino.html", {
             'mytitle': title,
@@ -250,15 +264,27 @@ def detail_inquilino(request, usuario_id):
         })
 
 
-
-def delete_inquilino(request, inquilino_id):
+def darbaja_inquilino(request, inquilino_id):
     inquilino = Usuario.objects.get( id_usuario=inquilino_id)
     if request.method == 'POST':
-        inquilino.delete()
-        return redirect('/sistemabio/inquilinos/')
-    return render(request,"sistemabio/inquilinos/delete-inquilino.html",{
-        'inquilino':inquilino
-    })
+     #    inquilino.delete()
+          print('inquilino: ',inquilino)
+          inquilino.id_status ='2'
+          print('status: ', inquilino.id_status)
+          try:
+               inquilino.save()
+               messages.success(request,"Inquilino dado de baja exitosamente")
+               return redirect('/sistemabio/inquilinos/')
+          except ValueError:
+               messages.error(request, "Error al dar de baja al inquilino.")
+               return render(request,"sistemabio/inquilinos/darbaja-inquilino.html",{
+                    'inquilino':inquilino
+               })
+    else:
+          inquilino = get_object_or_404(Usuario,pk=inquilino_id)
+          return render(request,"sistemabio/inquilinos/darbaja-inquilino.html",{
+               'inquilino':inquilino})
+
 @login_required
 def edit_inquilino(request, usuario_id):
      if request.method == "GET":
@@ -286,6 +312,85 @@ def edit_inquilino(request, usuario_id):
             return render(request, 'sistemabio/inquilinos/edit-inquilino.html', 
                           {'inquilino': inquilino, "form":  InquilinoForm, "error": "Error actualizando el inquilino."})
 
+def get_display_from_choice(value):
+    for choice in Usuario.CATALOGO_PERFIL:
+        if choice[0] == value:
+            return choice[1]
+    return None
+
+def reporte(request):
+    title='Reportes'
+    if request.method == "GET":
+        form=  ReporteForm
+        return render(request, 'sistemabio/reporte.html', 
+                      {"form":  form }) 
+    else:
+       form = ReporteForm(request.POST)
+       if form.is_valid():
+          print("Formulario es ", form.is_valid())
+          print('form : ', form['id_perfil'].value())
+          usuarios=Usuario.objects.filter( Q(id_perfil = form['id_perfil'].value()))
+          print("Usuarios: ", usuarios)
+          sesiones = Sesion.objects.filter(id_usuario__in=usuarios)          
+          print("Sesiones: ", sesiones)
+          # Crear el documento PDF
+          response = HttpResponse(content_type='application/pdf')
+          response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+          buffer = BytesIO()
+          doc = SimpleDocTemplate(buffer, pagesize=letter)
+          elements = []
+          # Crear encabezado con imágenes en las esquinas superiores
+          logo_path = 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/sistemabio/img/logo.png'
+          logo2_path = 'C:/Users/yobis/Desktop/sistemabio/mysite/sistemabio/static/sistemabio/img/upiita-logo.png'
+          header = Table([[Image(logo_path, width=100, height=70, hAlign='LEFT'), 'REPORTE DE SISTEMA BIOMÉTRICO R&S', Image(logo2_path, width=100, height=60, hAlign='RIGHT')]], colWidths=(200, 225, 150))
+          # header = Table([[ 'REPORTE DE SISTEMA BIOMÉTRICO R&S', Image(logo_path, width=100, height=50, hAlign='RIGHT')]], colWidths=( 300, 200))
+          elements.append(header)
+          # # Crear un estilo para el título
+          # styles = getSampleStyleSheet()
+          # estilo_titulo = styles['Title']
+          # titulo = Paragraph('REPORTE DE SISTEMA BIOMÉTRICO R&S', estilo_titulo)
+          # elements.append(titulo)
+          # Crear los estilos para la tabla
+          style = TableStyle([
+               ('BACKGROUND', (0, 0), (-1, 0), colors.blue),
+               ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+               # ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+               ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+               ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+               ('GRID', (0, 0), (-1, -1), 1, colors.black)
+          ])
+          # Crear la tabla de usuarios
+          user_data = [[
+               'Nombre', 'Tipo Usuario', 'No. Piso', 'No. Dep','Correo', 'Status', 'Datos Biometricos'
+          ]]
+          for usuario in usuarios:
+               sesiones_usuario = Sesion.objects.filter(id_usuario=usuario.id_usuario)
+               sesiones = ""
+               for sesion in sesiones_usuario:
+                    sesiones += f"{sesion.get_id_tipo_sesion_display()}, "
+               sesiones = sesiones.rstrip(", ")
+               user_data.append([
+                    usuario.nombre + " " + usuario.ap_paterno + " " + usuario.ap_materno,
+                    usuario.get_id_perfil_display(),
+                    usuario.piso,
+                    usuario.departamento,
+                    usuario.correo,
+                    usuario.get_id_status_display(),
+                    sesiones
+               ])
+          user_table = Table(user_data, style=style)
+          elements.append(user_table)
+          # Construir el PDF y enviar la respuesta
+          doc.build(elements)
+          pdf = buffer.getvalue()
+          buffer.close()
+          response.write(pdf)
+          messages.success(request, "¡El reporte se generó y se descargó correctamente!")
+          return response 
+       else:
+            messages.error(request, "Error: ¡El reporte no se pudo generar!")
+            return render(request, 'sistemabio/reporte.html', {"form":  ReporteForm })          
+
 # LA SIGUIENTE FUNCION USO DE ESTA VIEWS, TAMPOCO LAS ESTOY USANDO
 def ingresar_usuario(request):
     title='ingresar_usuario'
@@ -293,15 +398,12 @@ def ingresar_usuario(request):
          'mytitle':title
     })
 
-
-
 # LA SIGUIENTE FUNCION NO LA ESTOY USANDO, USO LA MISMA DE NEW_INQUILINO
 def registrar_usuario(request):
     title='registrar_usuario'
     return render (request,'sistemabio/registrar.html',{
          'mytitle':title
     })
-
 
 # Biométricos
 @login_required

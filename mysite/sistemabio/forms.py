@@ -69,13 +69,14 @@ class SesionForm(ModelForm):
         # self.fields['id_tipo_sesion'].widget.attrs['class']='form-control'
          self.fields['id_usuario'].widget.attrs['class']= 'form-control'
 #solo dato
-class SesionFormUsuario(ModelForm):
+class ReporteForm(ModelForm):
     class Meta:
-        model = Sesion
-        fields = ['dato' ]
+        model = Usuario
+        fields = ['id_perfil' ]
     def __init__(self, *args,**kwargs):
-        super(SesionFormUsuario,self).__init__(*args,**kwargs)
-        self.fields['dato'].widget.attrs['class']= 'form-control'
+        super(ReporteForm,self).__init__(*args,**kwargs)
+        self.fields['id_perfil'].widget.attrs['class']= 'form-control'
+        self.fields['id_perfil'].label= 'Indica que tipo de usuario generarás reporte'
 
 class MiFormularioSimple(forms.Form):
   #  dato_simple = forms.CharField('label'='Dato')

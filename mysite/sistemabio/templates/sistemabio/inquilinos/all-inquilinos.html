@@ -72,6 +72,7 @@
                       <th>No. Piso </th>
                       <th>No. Dep</th>
                       <th>Datos biometricos</th>
+                      <th>Status</th>
                       <th>Actions _____  </th>
                   </tr>
               </thead>
@@ -94,6 +95,7 @@
                           <br> 
                         {% endif %}
                       {% endfor %}
+                      <td>{{ inquilino.get_id_status_display}} </td>
                       <td>
                           <a href="{% url 'sistemabio:detail_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
                             <i class="fas fa-eye" style='font-size:24px;color:rgb(61, 149, 249)'></i>
@@ -101,7 +103,7 @@
                           <a href="{% url 'sistemabio:edit_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
                             <i class='fas fa-pencil-alt' style='font-size:24px;color:rgb(251, 227, 48)'></i>
                           </a>
-                          <a href="{% url 'sistemabio:delete_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
+                          <a href="{% url 'sistemabio:darbaja_inquilino' inquilino.id_usuario %}" style="text-decoration:none">
                             <i class='fas fa-trash-alt' style='font-size:24px;color:red'></i>
                           </a>
                       </td>
